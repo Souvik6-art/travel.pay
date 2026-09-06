@@ -14,11 +14,11 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
+    @NotBlank (message = "Name cannot be blank")
     private String name;
 
-    @NotBlank
-    @Email
+    @NotBlank (message = "Email can not be Blank")
+    @Email (message = "Please Enter valid Email")
     private String email;
 
     private String phoneNumber;
