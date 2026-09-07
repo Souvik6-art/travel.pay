@@ -1,6 +1,7 @@
 package com.travelpay.travel.pay.controller;
-
+import com.travelpay.travel.pay.exception.EmailAlreadyExistsException;
 import com.travelpay.travel.pay.entity.User;
+import com.travelpay.travel.pay.exception.EmailAlreadyExistsException;
 import com.travelpay.travel.pay.repository.UserRepository;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +20,9 @@ public class UserController {
 
     @PostMapping
     public User createUser(@Valid @RequestBody User user) {
+        if (userRepository.findByEmail(user.getEmail()).isPresent()) {
+            throw new EmailAlreadyExistsException("Email already registered");
+        }
         return userRepository.save(user);
     }
 
