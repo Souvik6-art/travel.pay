@@ -1,4 +1,4 @@
-package com.travelpay.travel.pay.Controller;
+package com.travelpay.travel.pay.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
