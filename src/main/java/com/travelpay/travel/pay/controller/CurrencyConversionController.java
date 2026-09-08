@@ -3,7 +3,7 @@ package com.travelpay.travel.pay.controller;
 import com.travelpay.travel.pay.entity.CurrencyConversionRequest;
 import com.travelpay.travel.pay.service.CurrencyConversionService;
 import org.springframework.web.bind.annotation.*;
-
+import jakarta.validation.Valid;
 import java.util.Map;
 
 @RestController
@@ -20,7 +20,7 @@ public class CurrencyConversionController {
 
     @PostMapping("/convert")
     public Map<String, Object> convertCurrency(
-            @RequestBody CurrencyConversionRequest request) {
+            @Valid @RequestBody CurrencyConversionRequest request) {
 
         double convertedAmount =
                 currencyConversionService.convert(request);
