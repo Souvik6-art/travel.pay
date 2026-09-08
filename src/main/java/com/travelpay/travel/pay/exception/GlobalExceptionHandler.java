@@ -74,6 +74,19 @@ public class GlobalExceptionHandler {
 
         return response;
     }
+
+
+    // Handles currency conversion errors
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(RuntimeException.class)
+    public Map<String, String> handleRuntimeException(
+            RuntimeException exception) {
+
+        Map<String, String> response = new HashMap<>();
+        response.put("message", exception.getMessage());
+
+        return response;
+    }
 }
 
 

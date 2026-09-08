@@ -25,13 +25,27 @@ public class CurrencyConversionService {
         String url = "https://api.frankfurter.dev/v2/rate/"
                 + from + "/" + to;
 
-        Map<String, Object> response = restClient.get()
-                .uri(url)
-                .retrieve()
-                .body(Map.class);
+        try {
 
-        double rate = ((Number) response.get("rate")).doubleValue();
+            Map<String, Object> response = restClient.get()
+                    .uri(url)
+                    .retrieve()
+                    .body(Map.class);
 
-        return amount * rate;
+            if (response == null || !response.containsKey("rate")) {
+                throw new RuntimeException("Exchange rate not available");
+            }
+
+            double rate =
+                    ((Number) response.get("rate")).doubleValue();
+
+            return amount * rate;
+
+        } catch (Exception e) {
+
+            throw new RuntimeException(
+                    "Unable to fetch exchange rate"
+            );
+        }
     }
 }
