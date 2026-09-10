@@ -8,6 +8,7 @@
     <title>TravelPay | Dashboard</title>
 
     <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
 </head>
 
 <body>
@@ -36,24 +37,102 @@
 </header>
 
 
-<main>
+<main class="dashboard-container">
 
-    <section class="hero">
+    <section class="dashboard-heading">
 
-        <div class="hero-content">
+        <p class="hero-tag">TRAVELPAY DASHBOARD</p>
 
-            <p class="hero-tag">
-                TRAVELPAY DASHBOARD
-            </p>
+        <h1>
+            Welcome back,
+            <span id="userName">Traveller</span>
+        </h1>
 
-            <h1>
-                Welcome to your
-                <span>Travel Wallet.</span>
-            </h1>
+        <p>
+            Here's an overview of your travel finances.
+        </p>
 
-            <p class="hero-description">
-                Your travel finances will appear here.
-            </p>
+    </section>
+
+
+    <!-- Main Cards -->
+
+    <section class="dashboard-grid">
+
+        <div class="dashboard-card wallet-card">
+
+            <p>Wallet Balance</p>
+
+            <h2 id="walletBalance">₹0.00</h2>
+
+            <span>Your available travel money</span>
+
+        </div>
+
+
+        <div class="dashboard-card">
+
+            <p>Total Budget</p>
+
+            <h2 id="totalBudget">₹0.00</h2>
+
+            <span>Your planned travel budget</span>
+
+        </div>
+
+
+        <div class="dashboard-card">
+
+            <p>Total Spent</p>
+
+            <h2 id="totalSpent">₹0.00</h2>
+
+            <span>Your travel expenses</span>
+
+        </div>
+
+
+        <div class="dashboard-card">
+
+            <p>Remaining Budget</p>
+
+            <h2 id="remainingBudget">₹0.00</h2>
+
+            <span>Budget still available</span>
+
+        </div>
+
+    </section>
+
+
+    <!-- Income / Expense -->
+
+    <section class="cash-flow-grid">
+
+        <div class="cash-card">
+
+            <div class="cash-icon">
+                ↓
+            </div>
+
+            <div>
+                <p>Total Deposits</p>
+                <h3 id="totalDeposits">₹0.00</h3>
+            </div>
+
+        </div>
+
+
+        <div class="cash-card">
+
+            <div class="cash-icon">
+                ↑
+            </div>
+
+            <div>
+                <p>Total Expenses</p>
+                <h3 id="totalExpenses">₹0.00</h3>
+            </div>
 
         </div>
 
@@ -63,6 +142,7 @@
 
 
 <script src="../js/auth.js"></script>
+<script src="../js/dashboard.js"></script>
 
 </body>
 
