@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
-
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>TravelPay | Currency Converter</title>
 
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/dashboard.css">
-
+    <link rel="stylesheet" href="../css/currency.css">
+    <!-- Font Awesome for swap icon -->
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    >
 </head>
 
 <body>
@@ -24,27 +25,16 @@
     </div>
 
     <nav>
-
         <a href="dashboard.html">Dashboard</a>
-
         <a href="expenses.html">Expenses</a>
-
         <a href="transactions.html">Transactions</a>
-
         <a href="budget.html">Budget</a>
-
         <a href="reports.html">Reports</a>
-
         <a href="currency.html">Currency</a>
-
     </nav>
 
     <div class="nav-buttons">
-
-        <button id="logoutBtn" class="login-btn">
-            Logout
-        </button>
-
+        <button id="logoutBtn" class="login-btn">Logout</button>
     </div>
 
 </header>
@@ -54,13 +44,9 @@
 
     <section class="dashboard-heading">
 
-        <p class="hero-tag">
-            TRAVELPAY CURRENCY
-        </p>
+        <p class="hero-tag">TRAVELPAY CURRENCY</p>
 
-        <h1>
-            Currency Converter
-        </h1>
+        <h1>Currency Converter</h1>
 
         <p>
             Convert your money before you travel.
@@ -71,124 +57,107 @@
 
     <section class="deposit-section">
 
-        <div class="deposit-card">
+        <div class="deposit-card currency-container">
 
-            <h2>
-                Convert Currency
-            </h2>
-
-            <p>
-                Check the current exchange value of your money.
-            </p>
+            <h2>Currency Converter</h2>
 
 
             <form id="currencyForm">
 
+                <!-- Amount -->
 
-                <div class="deposit-input">
+                <div class="amount">
 
-                    <label for="currencyAmount">
-                        Amount
-                    </label>
+                    <p>Enter Amount</p>
 
                     <input
-                            type="number"
                             id="currencyAmount"
-                            placeholder="Enter amount"
+                            value="1"
+                            type="number"
                             min="0.01"
                             step="0.01"
-                            required
                     >
 
                 </div>
 
 
-                <div class="deposit-input">
+                <!-- Currency Dropdowns -->
 
-                    <label for="fromCurrency">
-                        From
-                    </label>
+                <div class="dropdown">
 
-                    <select id="fromCurrency" required>
+                    <!-- FROM -->
 
-                        <option value="">
-                            Select currency
-                        </option>
+                    <div class="from">
 
-                        <option value="USD">
-                            USD - US Dollar
-                        </option>
+                        <p>From</p>
 
-                        <option value="INR">
-                            INR - Indian Rupee
-                        </option>
+                        <div class="select-container">
 
-                        <option value="EUR">
-                            EUR - Euro
-                        </option>
+                            <img
+                                    id="fromFlag"
+                                    alt="From currency flag"
+                            >
 
-                        <option value="GBP">
-                            GBP - British Pound
-                        </option>
+                            <select
+                                    name="from"
+                                    id="fromCurrency"
+                            ></select>
 
-                    </select>
+                        </div>
 
-                </div>
+                    </div>
 
 
-                <div class="deposit-input">
+                    <!-- Swap -->
 
-                    <label for="toCurrency">
-                        To
-                    </label>
+                    <i
+                            id="swapCurrency"
+                            class="fa-solid fa-arrow-right-arrow-left"
+                    ></i>
 
-                    <select id="toCurrency" required>
 
-                        <option value="">
-                            Select currency
-                        </option>
+                    <!-- TO -->
 
-                        <option value="USD">
-                            USD - US Dollar
-                        </option>
+                    <div class="to">
 
-                        <option value="INR">
-                            INR - Indian Rupee
-                        </option>
+                        <p>To</p>
 
-                        <option value="EUR">
-                            EUR - Euro
-                        </option>
+                        <div class="select-container">
 
-                        <option value="GBP">
-                            GBP - British Pound
-                        </option>
+                            <img
+                                    id="toFlag"
+                                    alt="To currency flag"
+                            >
 
-                    </select>
+                            <select
+                                    name="to"
+                                    id="toCurrency"
+                            ></select>
+
+                        </div>
+
+                    </div>
 
                 </div>
 
+
+                <!-- Result -->
+
+                <div id="currencyMessage" class="msg">
+                    1 USD = 1 INR
+                </div>
+
+
+                <!-- Convert Button -->
 
                 <button
                         type="submit"
-                        class="deposit-btn">
-
-                    Convert
-
+                        class="currency-btn"
+                >
+                    Get Exchange Rate
                 </button>
 
-
             </form>
-
-
-            <div id="currencyResult">
-
-                <p>
-                    Enter an amount and select currencies.
-                </p>
-
-            </div>
-
 
         </div>
 
@@ -197,9 +166,14 @@
 </main>
 
 
+<!-- Your original countryList -->
+<script src="../js/codes.js"></script>
+
+<!-- TravelPay authentication -->
 <script src="../js/auth.js"></script>
+
+<!-- Currency converter -->
 <script src="../js/currency.js"></script>
 
 </body>
-
 </html>
