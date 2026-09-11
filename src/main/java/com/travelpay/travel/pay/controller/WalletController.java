@@ -1,6 +1,6 @@
 package com.travelpay.travel.pay.controller;
 import com.travelpay.travel.pay.entity.DepositRequest;
-import com.travelpay.travel.pay.entity.DepositRequest;
+
 import com.travelpay.travel.pay.entity.User;
 import com.travelpay.travel.pay.entity.Wallet;
 import com.travelpay.travel.pay.repository.UserRepository;
@@ -43,6 +43,18 @@ public class WalletController {
 
         return walletRepository.save(wallet);
     }
+
+
+    // Get wallet by user ID
+
+    @GetMapping("/user/{userId}")
+    public Wallet getWalletByUser(@PathVariable Long userId) {
+
+        return walletRepository.findByUserId(userId)
+                .orElseThrow(() ->
+                        new RuntimeException("Wallet not found"));
+    }
+
 
 
 

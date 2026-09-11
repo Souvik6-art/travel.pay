@@ -55,3 +55,85 @@ async function loadDashboard() {
 
 
 loadDashboard();
+
+const depositForm = document.getElementById("depositForm");
+const depositMessage = document.getElementById("depositMessage");
+
+/// temporarily adding
+console.log("DEPOSIT FORM:", depositForm);
+console.log("DEPOSIT MESSAGE:", depositMessage);
+
+
+if (depositForm) {
+
+    depositForm.addEventListener("submit", async function (event) {
+
+        event.preventDefault();
+
+        const amount = Number(
+            document.getElementById("depositAmount").value
+        );
+
+        if (amount <= 0) {
+            depositMessage.textContent =
+                "Please enter a valid amount.";
+            return;
+        }
+
+        try {
+
+            depositMessage.textContent = "Adding money...";
+
+            // Get the user's wallet
+            const walletResponse = await fetch(
+                `/api/wallets/user/${userId}`
+            );
+
+            if (!walletResponse.ok) {
+                throw new Error("Wallet not found");
+            }
+
+            const wallet = await walletResponse.json();
+
+            // Deposit money
+            const depositResponse = await fetch(
+                `/api/wallets/${wallet.id}/deposit`,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        amount: amount
+                    })
+                }
+            );
+
+            const data = await depositResponse.json();
+
+            if (!depositResponse.ok) {
+                throw new Error(
+                    data.message || "Deposit failed"
+                );
+            }
+
+            depositMessage.textContent =
+                `₹${amount.toFixed(2)} added successfully!`;
+
+            depositForm.reset();
+
+            // Refresh dashboard values
+            loadDashboard();
+
+        } catch (error) {
+
+            console.error("Deposit error:", error);
+
+            depositMessage.textContent =
+                error.message;
+
+        }
+
+    });
+
+}
