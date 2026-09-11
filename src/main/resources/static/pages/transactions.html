@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>TravelPay | Transactions</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+</head>
+
+<body>
+
+<header class="navbar">
+
+    <div class="logo">
+        Travel<span>Pay</span>
+    </div>
+
+    <nav>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="expenses.html">Expenses</a>
+        <a href="transactions.html">Transactions</a>
+        <a href="budget.html">Budget</a>
+        <a href="reports.html">Reports</a>
+        <a href="currency.html">Currency</a>
+    </nav>
+
+    <div class="nav-buttons">
+        <button id="logoutBtn" class="login-btn">
+            Logout
+        </button>
+    </div>
+
+</header>
+
+
+<main class="dashboard-container">
+
+    <section class="dashboard-heading">
+
+        <p class="hero-tag">TRAVELPAY TRANSACTIONS</p>
+
+        <h1>
+            Transaction History
+        </h1>
+
+        <p>
+            Keep track of your deposits and travel expenses.
+        </p>
+
+    </section>
+
+
+    <section class="deposit-section">
+
+        <div class="deposit-card">
+
+            <h2>Recent Transactions</h2>
+
+            <p>
+                Your wallet activity will appear here.
+            </p>
+
+            <div id="transactionList">
+
+                <p>
+                    Loading transactions...
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<script src="../js/auth.js"></script>
+<script src="../js/transactions.js"></script>
+
+</body>
+
+</html>
