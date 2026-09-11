@@ -52,6 +52,31 @@ public class BudgetController {
         return budgetRepository.save(budget);
     }
 
+
+
+    @PutMapping("/{userId}")
+    public Budget updateBudget(
+            @PathVariable Long userId,
+            @RequestBody Budget budget) {
+
+        Budget existingBudget = budgetRepository.findByUserId(userId)
+                .orElseThrow(() ->
+                        new RuntimeException("Budget not found"));
+
+        if (budget.getAmount() <= 0) {
+            throw new RuntimeException(
+                    "Budget amount must be greater than zero");
+        }
+
+        existingBudget.setAmount(budget.getAmount());
+
+        return budgetRepository.save(existingBudget);
+    }
+
+
+
+
+
     @GetMapping("/user/{userId}")
     public Budget getBudget(@PathVariable Long userId) {
 

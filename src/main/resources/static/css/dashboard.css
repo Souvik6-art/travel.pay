@@ -278,3 +278,57 @@
 .expense-amount strong {
     color: #ff6b6b;
 }
+
+/* ============================= */
+/* REPORT ITEMS */
+/* ============================= */
+
+#categoryReport,
+#monthlyReport {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.report-item {
+    background: #07111f;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+
+    padding: 16px 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    transition: 0.3s;
+}
+
+.report-item:hover {
+    border-color: rgba(53, 208, 186, 0.4);
+    transform: translateX(4px);
+}
+
+.report-item h3 {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 600;
+    color: #d7e0ea;
+}
+
+.report-item strong {
+    font-size: 16px;
+    color: #35d0ba;
+}
+
+/* ============================= */
+/* REPORT CHART */
+/* ============================= */
+
+.chart-container {
+    width: 100%;
+    max-width: 450px;
+    margin: 30px auto 10px;
+    padding: 20px;
+}
