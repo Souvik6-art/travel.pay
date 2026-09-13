@@ -38,16 +38,7 @@ public class Wallet {
         this.user = user;
     }
 
-    //recently added.. .
-    @ManyToOne
-    @JoinColumn(name = "trip_id")
-    private Trip trip;
-    public Trip getTrip() {
-        return trip;
-    }
 
-    public void setTrip(Trip trip) {
-        this.trip = trip;
-    }
+
 }
 

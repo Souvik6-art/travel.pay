@@ -12,12 +12,10 @@ public interface ExpenseRepository extends JpaRepository<Expense, Long> {
     @Query("SELECT COALESCE(SUM(e.amount), 0) FROM Expense e WHERE e.user.id = :userId")
     double getTotalExpensesByUserId(@Param("userId") Long userId);
 
-    @Query("""
-        SELECT e.category, COALESCE(SUM(e.amount), 0)
-        FROM Expense e
-        WHERE e.user.id = :userId
-        GROUP BY e.category
-        """)
+    @Query("SELECT COALESCE(SUM(e.amount), 0) FROM Expense e WHERE e.trip.id = :tripId")
+    double getTotalExpensesByTripId(@Param("tripId") Long tripId);
+
+
     List<Object[]> getSpendingByCategory(@Param("userId") Long userId);
 
     @Query("""

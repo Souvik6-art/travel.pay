@@ -8,4 +8,6 @@ import java.util.Optional;
 public interface BudgetRepository extends JpaRepository<Budget, Long> {
 
     Optional<Budget> findByUserId(Long userId);
+
+    Optional<Budget> findByTripId(Long tripId);
 }

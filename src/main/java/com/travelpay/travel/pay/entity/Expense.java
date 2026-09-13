@@ -21,6 +21,10 @@ public class Expense {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @ManyToOne
+    @JoinColumn(name = "trip_id")
+    private Trip trip;
+
     public Expense() {
     }
 
@@ -67,5 +71,14 @@ public class Expense {
     public void setExpenseDate(LocalDateTime expenseDate) {
         this.expenseDate = expenseDate;
     }
+
+    public Trip getTrip() {
+        return trip;
+    }
+
+    public void setTrip(Trip trip) {
+        this.trip = trip;
+    }
+
 
 }

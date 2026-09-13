@@ -15,6 +15,9 @@ public class Budget {
     @JoinColumn(name = "user_id", unique = true)
     private User user;
 
+    @ManyToOne
+    @JoinColumn(name = "trip_id")
+    private Trip trip;
     public Budget() {
     }
 
@@ -36,5 +39,13 @@ public class Budget {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Trip getTrip() {
+        return trip;
+    }
+
+    public void setTrip(Trip trip) {
+        this.trip = trip;
     }
 }
