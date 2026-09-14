@@ -45,4 +45,12 @@ public class TransactionController {
 
         return transactionRepository.findByUserId(userId);
     }
+
+    @GetMapping("/user/{userId}/trip/{tripId}")
+    public List<Transaction> getTripTransactions(
+            @PathVariable Long userId,
+            @PathVariable Long tripId) {
+
+        return transactionRepository.findByUserIdAndTripId(userId, tripId);
+    }
 }
