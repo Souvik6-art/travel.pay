@@ -23,6 +23,10 @@ public class Transaction {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @ManyToOne
+    @JoinColumn(name = "trip_id")
+    private Trip trip;
+
     public Transaction() {
     }
 
@@ -69,4 +73,13 @@ public class Transaction {
     public void setUser(User user) {
         this.user = user;
     }
+
+    public Trip getTrip() {
+        return trip;
+    }
+
+    public void setTrip(Trip trip) {
+        this.trip = trip;
+    }
+
 }

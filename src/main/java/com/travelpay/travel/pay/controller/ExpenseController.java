@@ -109,7 +109,7 @@ public class ExpenseController {
         transaction.setDescription(expense.getTitle());
         transaction.setTransactionDate(LocalDateTime.now());
         transaction.setUser(user);
-
+        transaction.setTrip(trip);
         transactionRepository.save(transaction);
 
 
