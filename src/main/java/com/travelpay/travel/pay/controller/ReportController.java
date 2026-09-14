@@ -1,18 +1,19 @@
-package com.travelpay.travel.pay.controller;
+        package com.travelpay.travel.pay.controller;
 
 import com.travelpay.travel.pay.entity.User;
+import com.travelpay.travel.pay.entity.Transaction;
+import com.travelpay.travel.pay.entity.Wallet;
+
 import com.travelpay.travel.pay.repository.ExpenseRepository;
 import com.travelpay.travel.pay.repository.UserRepository;
+import com.travelpay.travel.pay.repository.TransactionRepository;
+import com.travelpay.travel.pay.repository.WalletRepository;
+import com.travelpay.travel.pay.repository.BudgetRepository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
-import com.travelpay.travel.pay.entity.Transaction;
-import com.travelpay.travel.pay.entity.Wallet;
-import com.travelpay.travel.pay.repository.TransactionRepository;
-import com.travelpay.travel.pay.repository.WalletRepository;
 
 @RestController
 @RequestMapping("/api/reports")
@@ -20,27 +21,28 @@ public class ReportController {
 
     private final ExpenseRepository expenseRepository;
     private final UserRepository userRepository;
-
-    //recent add kora holo..
     private final TransactionRepository transactionRepository;
     private final WalletRepository walletRepository;
-
-    public ReportController(ExpenseRepository expenseRepository,
-                            UserRepository userRepository , TransactionRepository transactionRepository,
-                            WalletRepository walletRepository) {
+    private final BudgetRepository budgetRepository;
+    public ReportController(
+            ExpenseRepository expenseRepository,
+            UserRepository userRepository,
+            TransactionRepository transactionRepository,
+            WalletRepository walletRepository,BudgetRepository budgetRepository) {
 
         this.expenseRepository = expenseRepository;
         this.userRepository = userRepository;
-
         this.transactionRepository = transactionRepository;
         this.walletRepository = walletRepository;
+        this.budgetRepository =budgetRepository;
     }
 
+    // User-wide category spending
     @GetMapping("/user/{userId}/category")
     public Map<String, Double> getSpendingByCategory(
             @PathVariable Long userId) {
 
-        User user = userRepository.findById(userId)
+        userRepository.findById(userId)
                 .orElseThrow(() ->
                         new RuntimeException("User not found"));
 
@@ -61,15 +63,41 @@ public class ReportController {
         return spendingByCategory;
     }
 
-    // monthly expense pawa jabe...
+    // Trip-specific category spending
+    @GetMapping("/user/{userId}/trip/{tripId}/category")
+    public Map<String, Double> getTripSpendingByCategory(
+            @PathVariable Long userId,
+            @PathVariable Long tripId) {
 
+        userRepository.findById(userId)
+                .orElseThrow(() ->
+                        new RuntimeException("User not found"));
+
+        List<Object[]> results =
+                expenseRepository.getSpendingByCategoryForTrip(tripId);
+
+        Map<String, Double> spendingByCategory =
+                new LinkedHashMap<>();
+
+        for (Object[] result : results) {
+
+            String category = (String) result[0];
+            Double amount = ((Number) result[1]).doubleValue();
+
+            spendingByCategory.put(category, amount);
+        }
+
+        return spendingByCategory;
+    }
+
+    // User-wide monthly spending
     @GetMapping("/user/{userId}/monthly")
     public Map<Integer, Double> getMonthlySpending(
             @PathVariable Long userId) {
 
         System.out.println("MONTHLY ENDPOINT HIT: " + userId);
 
-        User user = userRepository.findById(userId)
+        userRepository.findById(userId)
                 .orElseThrow(() ->
                         new RuntimeException("User not found"));
 
@@ -90,13 +118,69 @@ public class ReportController {
         return monthlySpending;
     }
 
-    // Summary dewa jabe ekhan theke
+    @GetMapping("/user/{userId}/trip/{tripId}/summary")
+    public Map<String, Double> getTripFinancialSummary(
+            @PathVariable Long userId,
+            @PathVariable Long tripId) {
 
+        userRepository.findById(userId)
+                .orElseThrow(() ->
+                        new RuntimeException("User not found"));
+
+        double totalBudget =
+                budgetRepository.findByTripId(tripId)
+                        .orElseThrow(() ->
+                                new RuntimeException("Budget not found"))
+                        .getAmount();
+
+        double totalSpent =
+                expenseRepository.getTotalExpensesByTripId(tripId);
+
+        double remainingBudget =
+                totalBudget - totalSpent;
+
+        Map<String, Double> summary = new LinkedHashMap<>();
+
+        summary.put("totalBudget", totalBudget);
+        summary.put("totalSpent", totalSpent);
+        summary.put("remainingBudget", remainingBudget);
+
+        return summary;
+    }
+
+
+    @GetMapping("/user/{userId}/trip/{tripId}/monthly")
+    public Map<Integer, Double> getTripMonthlySpending(
+            @PathVariable Long userId,
+            @PathVariable Long tripId) {
+
+        userRepository.findById(userId)
+                .orElseThrow(() ->
+                        new RuntimeException("User not found"));
+
+        List<Object[]> results =
+                expenseRepository.getMonthlySpendingForTrip(tripId);
+
+        Map<Integer, Double> monthlySpending =
+                new LinkedHashMap<>();
+
+        for (Object[] result : results) {
+
+            Integer month = ((Number) result[0]).intValue();
+            Double amount = ((Number) result[1]).doubleValue();
+
+            monthlySpending.put(month, amount);
+        }
+
+        return monthlySpending;
+    }
+
+    // User-wide financial summary
     @GetMapping("/user/{userId}/summary")
     public Map<String, Double> getFinancialSummary(
             @PathVariable Long userId) {
 
-        User user = userRepository.findById(userId)
+        userRepository.findById(userId)
                 .orElseThrow(() ->
                         new RuntimeException("User not found"));
 
@@ -130,7 +214,5 @@ public class ReportController {
 
         return summary;
     }
-
-
-
 }
+

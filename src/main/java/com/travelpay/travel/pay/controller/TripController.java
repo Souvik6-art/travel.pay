@@ -92,4 +92,70 @@ public class TripController {
                 .orElseThrow(() ->
                         new RuntimeException("Trip not found"));
     }
+
+    @PutMapping("/{userId}/{tripId}")
+    public Trip updateTrip(
+            @PathVariable Long userId,
+            @PathVariable Long tripId,
+            @RequestBody Trip updatedTrip) {
+
+        Trip existingTrip = tripRepository.findById(tripId)
+                .orElseThrow(() ->
+                        new RuntimeException("Trip not found"));
+
+        if (!existingTrip.getUser().getId().equals(userId)) {
+            throw new RuntimeException("Trip does not belong to this user");
+        }
+
+        if (updatedTrip.getTripName() == null ||
+                updatedTrip.getTripName().isBlank()) {
+            throw new RuntimeException("Trip name is required");
+        }
+
+        if (updatedTrip.getDestination() == null ||
+                updatedTrip.getDestination().isBlank()) {
+            throw new RuntimeException("Destination is required");
+        }
+
+        if (updatedTrip.getStartDate() == null ||
+                updatedTrip.getEndDate() == null) {
+            throw new RuntimeException(
+                    "Start date and end date are required");
+        }
+
+        if (updatedTrip.getEndDate()
+                .isBefore(updatedTrip.getStartDate())) {
+            throw new RuntimeException(
+                    "End date cannot be before start date");
+        }
+
+        existingTrip.setTripName(updatedTrip.getTripName());
+        existingTrip.setDestination(updatedTrip.getDestination());
+        existingTrip.setStartDate(updatedTrip.getStartDate());
+        existingTrip.setEndDate(updatedTrip.getEndDate());
+
+        return tripRepository.save(existingTrip);
+    }
+
+    @DeleteMapping("/{userId}/{tripId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteTrip(
+            @PathVariable Long userId,
+            @PathVariable Long tripId) {
+
+        Trip trip = tripRepository.findById(tripId)
+                .orElseThrow(() ->
+                        new RuntimeException("Trip not found"));
+
+        if (!trip.getUser().getId().equals(userId)) {
+            throw new RuntimeException(
+                    "Trip does not belong to this user");
+        }
+
+        tripRepository.delete(trip);
+    }
+
+
+
+
 }

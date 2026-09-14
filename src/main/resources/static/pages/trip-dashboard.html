@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Trip Dashboard - TravelPay</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+</head>
+
+<body>
+
+<header class="navbar">
+
+    <div class="logo">
+        Travel<span>Pay</span>
+    </div>
+
+    <nav>
+        <a href="trips.html">My Trips</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="currency.html">Currency</a>
+    </nav>
+
+    <div class="nav-buttons">
+        <button onclick="backToTrips()" class="login-btn">
+            Back to Trips
+        </button>
+    </div>
+
+</header>
+
+
+<main class="dashboard-container">
+
+    <!-- Trip Heading -->
+
+    <section class="dashboard-heading">
+
+        <p class="hero-tag">
+            TRAVELPAY TRIP
+        </p>
+
+        <h1 id="tripName">
+            Trip Dashboard
+        </h1>
+
+        <div id="tripInfo"></div>
+
+    </section>
+
+
+    <!-- Financial Summary -->
+
+    <section class="dashboard-grid">
+
+        <div class="dashboard-card">
+
+            <p>Total Budget</p>
+
+            <h2 id="tripBudget">
+                ₹0.00
+            </h2>
+
+            <span>
+                Budget for this trip
+            </span>
+
+        </div>
+
+
+        <div class="dashboard-card">
+
+            <p>Total Spent</p>
+
+            <h2 id="tripSpent">
+                ₹0.00
+            </h2>
+
+            <span>
+                Money spent on this trip
+            </span>
+
+        </div>
+
+
+        <div class="dashboard-card">
+
+            <p>Remaining Budget</p>
+
+            <h2 id="tripRemaining">
+                ₹0.00
+            </h2>
+
+            <span>
+                Budget left
+            </span>
+
+        </div>
+
+    </section>
+
+
+    <!-- Trip Actions -->
+
+    <section class="deposit-section">
+
+        <div class="deposit-card">
+
+            <h2>Manage Your Trip</h2>
+
+            <p>
+                Manage your budget, expenses and financial activity.
+            </p>
+
+
+            <div id="tripActions">
+
+                <button onclick="openBudget()">
+                    Budget
+                </button>
+
+                <button onclick="openExpenses()">
+                    Expenses
+                </button>
+
+                <button onclick="openTransactions()">
+                    Transactions
+                </button>
+
+                <button onclick="openReports()">
+                    Reports
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- Back -->
+
+    <section class="deposit-section">
+
+        <button onclick="backToTrips()">
+            ← Back to My Trips
+        </button>
+
+    </section>
+
+</main>
+
+
+<script src="../js/trip-dashboard.js"></script>
+
+</body>
+
+</html>
+

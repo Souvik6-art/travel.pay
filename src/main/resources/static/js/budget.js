@@ -1,7 +1,12 @@
 const userId = localStorage.getItem("userId");
-
+const tripId = localStorage.getItem("tripId");
+console.log("🔥 NEW BUDGET.JS LOADED");
 if (!userId) {
     window.location.href = "login.html";
+}
+
+if (!tripId) {
+    window.location.href = "trips.html";
 }
 
 
@@ -14,16 +19,17 @@ async function loadBudget() {
     try {
 
         const response = await fetch(
-            `/api/budgets/user/${userId}/summary`
+            `/api/budgets/user/${userId}/trip/${tripId}/summary`
         );
 
         if (!response.ok) {
-            throw new Error("Unable to load budget");
+            throw new Error("Unable to load trip budget");
         }
 
         const data = await response.json();
 
-        console.log("Budget data:", data);
+        console.log("Trip Budget data:", data);
+
 
         document.getElementById("budgetAmount").textContent =
             `₹${Number(data.totalBudget).toFixed(2)}`;
@@ -46,6 +52,7 @@ budgetForm.addEventListener("submit", async function (event) {
 
     event.preventDefault();
 
+
     const amount = Number(
         document.getElementById("budgetAmountInput").value
     );
@@ -63,13 +70,13 @@ budgetForm.addEventListener("submit", async function (event) {
     try {
 
         budgetMessage.textContent =
-            "Setting budget...";
+            "Setting trip budget...";
 
 
         const response = await fetch(
-            `/api/budgets/${userId}`,
+            `/api/budgets/${userId}/${tripId}`,
             {
-              method: "PUT",
+                method: "PUT",
 
                 headers: {
                     "Content-Type": "application/json"
@@ -88,13 +95,13 @@ budgetForm.addEventListener("submit", async function (event) {
         if (!response.ok) {
 
             throw new Error(
-                data.message || "Unable to set budget"
+                data.message || "Unable to set trip budget"
             );
         }
 
 
         budgetMessage.textContent =
-            `Budget updated to ₹${amount.toFixed(2)} successfully!`;
+            `Trip budget updated to ₹${amount.toFixed(2)} successfully!`;
 
         budgetForm.reset();
 

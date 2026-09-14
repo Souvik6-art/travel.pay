@@ -1,7 +1,12 @@
 const userId = localStorage.getItem("userId");
+const tripId = localStorage.getItem("tripId");
 
 if (!userId) {
     window.location.href = "login.html";
+}
+
+if (!tripId) {
+    window.location.href = "trips.html";
 }
 
 
@@ -10,28 +15,40 @@ async function loadSummary() {
     try {
 
         const response = await fetch(
-            `/api/reports/user/${userId}/summary`
+            `/api/reports/user/${userId}/trip/${tripId}/summary`
         );
 
         if (!response.ok) {
-            throw new Error("Unable to load summary");
+            throw new Error("Unable to load trip summary");
         }
 
         const data = await response.json();
 
-        console.log("Report summary:", data);
+        console.log("Trip Report summary:", data);
 
-        document.getElementById("reportDeposits").textContent =
-            `₹${Number(data.totalDeposits).toFixed(2)}`;
+        document.getElementById("reportBudget").textContent =
+            `₹${Number(data.totalBudget).toFixed(2)}`;
 
         document.getElementById("reportExpenses").textContent =
-            `₹${Number(data.totalExpenses).toFixed(2)}`;
+            `₹${Number(data.totalSpent).toFixed(2)}`;
 
-        document.getElementById("reportCashFlow").textContent =
-            `₹${Number(data.netCashFlow).toFixed(2)}`;
+        document.getElementById("reportRemaining").textContent =
+            `₹${Number(data.remainingBudget).toFixed(2)}`;
+
+
+        // Load global wallet balance
+        const walletResponse = await fetch(
+            `/api/wallets/user/${userId}`
+        );
+
+        if (!walletResponse.ok) {
+            throw new Error("Unable to load wallet balance");
+        }
+
+        const wallet = await walletResponse.json();
 
         document.getElementById("reportBalance").textContent =
-            `₹${Number(data.walletBalance).toFixed(2)}`;
+            `₹${Number(wallet.balance).toFixed(2)}`;
 
     } catch (error) {
 
@@ -39,7 +56,6 @@ async function loadSummary() {
 
     }
 }
-
 
 async function loadCategoryReport() {
 
@@ -49,7 +65,7 @@ async function loadCategoryReport() {
     try {
 
         const response = await fetch(
-            `/api/reports/user/${userId}/category`
+            `/api/reports/user/${userId}/trip/${tripId}/category`
         );
 
         if (!response.ok) {
@@ -144,9 +160,9 @@ async function loadMonthlyReport() {
 
     try {
 
-        const response = await fetch(
-            `/api/reports/user/${userId}/monthly`
-        );
+       const response = await fetch(
+           `/api/reports/user/${userId}/trip/${tripId}/monthly`
+       );
 
         if (!response.ok) {
             throw new Error("Unable to load monthly report");

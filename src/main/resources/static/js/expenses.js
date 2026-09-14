@@ -1,7 +1,16 @@
 const userId = localStorage.getItem("userId");
+const tripId = localStorage.getItem("tripId");
+
+
+
+
 
 if (!userId) {
     window.location.href = "login.html";
+}
+
+if (!tripId) {
+    window.location.href = "trips.html";
 }
 
 
@@ -13,8 +22,12 @@ expenseForm.addEventListener("submit", async function (event) {
 
     event.preventDefault();
 
-    const title = document.getElementById("expenseTitle").value;
-    const category = document.getElementById("expenseCategory").value;
+    const title =
+        document.getElementById("expenseTitle").value;
+
+    const category =
+        document.getElementById("expenseCategory").value;
+
     const amount = Number(
         document.getElementById("expenseAmount").value
     );
@@ -36,7 +49,7 @@ expenseForm.addEventListener("submit", async function (event) {
 
 
         const response = await fetch(
-            `/api/expenses/${userId}`,
+            `/api/expenses/${userId}/${tripId}`,
             {
                 method: "POST",
 

@@ -1,7 +1,12 @@
 const userId = localStorage.getItem("userId");
+const tripId = localStorage.getItem("tripId");
 
 if (!userId) {
     window.location.href = "login.html";
+}
+
+if (!tripId) {
+    window.location.href = "trips.html";
 }
 
 
@@ -13,27 +18,30 @@ async function loadTransactions() {
     try {
 
         const response = await fetch(
-            `/api/transactions/user/${userId}`
+            `/api/transactions/user/${userId}/trip/${tripId}`
         );
 
         if (!response.ok) {
-            throw new Error("Unable to load transactions");
+            throw new Error("Unable to load trip transactions");
         }
 
         const transactions = await response.json();
 
-        console.log("Transactions:", transactions);
-transactions.sort(function (a, b) {
+        console.log("Trip Transactions:", transactions);
 
-    return new Date(b.transactionDate) -
-           new Date(a.transactionDate);
 
-});
+        transactions.sort(function (a, b) {
+
+            return new Date(b.transactionDate) -
+                   new Date(a.transactionDate);
+
+        });
+
 
         if (transactions.length === 0) {
 
             transactionList.innerHTML =
-                "<p>No transactions yet.</p>";
+                "<p>No transactions for this trip yet.</p>";
 
             return;
         }
@@ -51,7 +59,9 @@ transactions.sort(function (a, b) {
                 "transaction-item";
 
 
-            const isDeposit = transaction.type === "DEPOSIT";
+            const isDeposit =
+                transaction.type === "DEPOSIT";
+
 
             transactionItem.innerHTML = `
                 <div class="transaction-info">
