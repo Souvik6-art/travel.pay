@@ -175,6 +175,20 @@ async function loadExpenses() {
                     </strong>
 
                 </div>
+
+                <div class="expense-actions">
+
+                    <button
+                        onclick="editExpense(${expense.id})">
+                        Edit
+                    </button>
+
+                    <button
+                        onclick="deleteExpense(${expense.id})">
+                        Delete
+                    </button>
+
+                </div>
             `;
 
 
@@ -196,5 +210,225 @@ async function loadExpenses() {
     }
 }
 
+let editingExpenseId = null;
+
+async function editExpense(expenseId) {
+
+    try {
+
+        const response = await fetch(
+            `/api/expenses/user/${userId}/trip/${tripId}`
+        );
+
+        if (!response.ok) {
+            throw new Error("Unable to load expense");
+        }
+
+        const expenses = await response.json();
+
+        const expense = expenses.find(function (item) {
+            return item.id === expenseId;
+        });
+
+        if (!expense) {
+            throw new Error("Expense not found");
+        }
+
+        // Store the expense ID
+        editingExpenseId = expenseId;
+
+        // Fill the edit form
+        document.getElementById("editExpenseTitle").value =
+            expense.title;
+
+        document.getElementById("editExpenseCategory").value =
+            expense.category;
+
+        document.getElementById("editExpenseAmount").value =
+            expense.amount;
+
+        // Show edit section
+        document.getElementById("editExpenseSection").style.display =
+            "block";
+
+        // Scroll to edit form
+        document.getElementById("editExpenseSection").scrollIntoView({
+            behavior: "smooth"
+        });
+
+    } catch (error) {
+
+        console.error(
+            "Edit expense error:",
+            error
+        );
+
+        alert(error.message);
+    }
+}
+
+//********************************************************
+
+
+const editExpenseForm =
+    document.getElementById("editExpenseForm");
+
+const cancelEditBtn =
+    document.getElementById("cancelEditBtn");
+
+editExpenseForm.addEventListener("submit", async function (event) {
+
+    event.preventDefault();
+
+    if (!editingExpenseId) {
+        return;
+    }
+
+    const title =
+        document.getElementById("editExpenseTitle").value;
+
+    const category =
+        document.getElementById("editExpenseCategory").value;
+
+    const amount =
+        Number(
+            document.getElementById("editExpenseAmount").value
+        );
+
+    const editExpenseMessage =
+        document.getElementById("editExpenseMessage");
+
+    if (amount <= 0) {
+
+        editExpenseMessage.textContent =
+            "Expense amount must be greater than zero.";
+
+        return;
+    }
+
+    try {
+
+        editExpenseMessage.textContent =
+            "Updating expense...";
+
+        const response = await fetch(
+            `/api/expenses/${userId}/${tripId}/${editingExpenseId}`,
+            {
+                method: "PUT",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+                    title: title,
+                    category: category,
+                    amount: amount
+                })
+            }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.message || "Unable to update expense"
+            );
+        }
+
+        editExpenseMessage.textContent =
+            "Expense updated successfully!";
+
+        // Hide form after successful update
+        setTimeout(function () {
+
+            document.getElementById(
+                "editExpenseSection"
+            ).style.display = "none";
+
+        }, 800);
+
+        editingExpenseId = null;
+
+        // Refresh expense list
+        loadExpenses();
+
+    } catch (error) {
+
+        console.error(
+            "Update expense error:",
+            error
+        );
+
+        editExpenseMessage.textContent =
+            error.message;
+    }
+});
+
+//*********
+cancelEditBtn.addEventListener("click", function () {
+
+    editingExpenseId = null;
+
+    editExpenseForm.reset();
+
+    document.getElementById(
+        "editExpenseSection"
+    ).style.display = "none";
+
+});
+
+
+
+//*******************************************************************
+async function deleteExpense(expenseId) {
+
+    const confirmed =
+        confirm(
+            "Are you sure you want to delete this expense?"
+        );
+
+
+    if (!confirmed) {
+        return;
+    }
+
+
+    try {
+
+        const response = await fetch(
+            `/api/expenses/${userId}/${tripId}/${expenseId}`,
+            {
+                method: "DELETE"
+            }
+        );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Unable to delete expense"
+            );
+        }
+
+
+        alert("Expense deleted successfully!");
+
+        loadExpenses();
+
+
+    } catch (error) {
+
+        console.error(
+            "Delete expense error:",
+            error
+        );
+
+        alert(error.message);
+    }
+}
+
 
 loadExpenses();
+

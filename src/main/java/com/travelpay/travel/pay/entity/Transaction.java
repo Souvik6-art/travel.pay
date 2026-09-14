@@ -82,4 +82,17 @@ public class Transaction {
         this.trip = trip;
     }
 
+    @OneToOne
+    @JoinColumn(name = "expense_id", unique = true)
+    private Expense expense;
+
+    public Expense getExpense() {
+        return expense;
+    }
+
+    public void setExpense(Expense expense) {
+        this.expense = expense;
+    }
+
+
 }

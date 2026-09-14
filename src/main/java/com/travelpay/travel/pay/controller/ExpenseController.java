@@ -69,25 +69,28 @@ public class ExpenseController {
                     "Expense amount must be greater than zero");
         }
 
-        // Create transaction
-        Transaction transaction = new Transaction();
-
-        transaction.setType("EXPENSE");
-        transaction.setAmount(expense.getAmount());
-        transaction.setDescription(expense.getTitle());
-        transaction.setTransactionDate(LocalDateTime.now());
-        transaction.setUser(user);
-        transaction.setTrip(trip);
-
-        transactionRepository.save(transaction);
-
-        // Connect expense with user and trip
         expense.setUser(user);
         expense.setTrip(trip);
         expense.setExpenseDate(LocalDateTime.now());
 
-        // Save expense
-        return expenseRepository.save(expense);
+        Expense savedExpense =
+                expenseRepository.save(expense);
+
+        Transaction transaction = new Transaction();
+
+        transaction.setType("EXPENSE");
+        transaction.setAmount(savedExpense.getAmount());
+        transaction.setDescription(savedExpense.getTitle());
+        transaction.setTransactionDate(savedExpense.getExpenseDate());
+        transaction.setUser(user);
+        transaction.setTrip(trip);
+
+// Connect transaction to this expense
+        transaction.setExpense(savedExpense);
+
+        transactionRepository.save(transaction);
+
+        return savedExpense;
     }
 
     @PutMapping("/{userId}/{tripId}/{expenseId}")
@@ -136,13 +139,39 @@ public class ExpenseController {
             throw new RuntimeException(
                     "Expense amount must be greater than zero");
         }
-
-        // Update expense details
+//*************************************************************************
         existingExpense.setTitle(expense.getTitle());
         existingExpense.setCategory(expense.getCategory());
         existingExpense.setAmount(expense.getAmount());
 
-        return expenseRepository.save(existingExpense);
+        Expense updatedExpense =
+                expenseRepository.save(existingExpense);
+
+// Find the transaction linked to this expense
+        Transaction transaction =
+                transactionRepository.findByExpenseId(
+                        updatedExpense.getId()
+                ).orElse(null);
+
+// Update the transaction
+        if (transaction != null) {
+
+            transaction.setAmount(
+                    updatedExpense.getAmount()
+            );
+
+            transaction.setDescription(
+                    updatedExpense.getTitle()
+            );
+
+            transactionRepository.save(transaction);
+        }
+
+        return updatedExpense;
+
+
+
+        //**************************************************
     }
 
 
@@ -189,6 +218,15 @@ public class ExpenseController {
         }
 
         // Delete expense
+        Transaction transaction =
+                transactionRepository.findByExpenseId(
+                        existingExpense.getId()
+                ).orElse(null);
+
+        if (transaction != null) {
+            transactionRepository.delete(transaction);
+        }
+
         expenseRepository.delete(existingExpense);
     }
 
