@@ -70,7 +70,7 @@ if (loginForm) {
             loginMessage.textContent =
                 "Login successful! Redirecting...";
 
-            window.location.href = "dashboard.html";
+          window.location.href = "trips.html";
 
         } catch (error) {
 

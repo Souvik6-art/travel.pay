@@ -588,4 +588,551 @@ footer p {
     }
 
 }
+.expense-item {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    align-items: center;
+    gap: 25px;
 
+    padding: 22px;
+    margin-top: 15px;
+
+    border: 1px solid rgba(212, 175, 55, 0.25);
+    border-radius: 16px;
+
+    background: linear-gradient(
+        135deg,
+        #111827,
+        #1e1b4b,
+        #172554
+    );
+
+    color: #f8fafc;
+
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.25);
+
+    transition: 0.25s ease;
+}
+
+.expense-item:hover {
+    transform: translateY(-3px);
+
+    border-color: rgba(212, 175, 55, 0.55);
+
+    box-shadow:
+        0 14px 35px rgba(0, 0, 0, 0.35);
+}
+
+.expense-info h3 {
+    margin: 0 0 6px 0;
+    font-size: 19px;
+    color: #f8fafc;
+}
+
+.expense-info p {
+    margin: 0 0 6px 0;
+    color: #cbd5e1;
+}
+
+.expense-info small {
+    color: #94a3b8;
+}
+
+.expense-amount strong {
+    font-size: 21px;
+    color: #f4d06f;
+}
+
+.expense-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.expense-actions button {
+    padding: 8px 14px;
+
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 8px;
+
+    cursor: pointer;
+
+    color: white;
+    background: rgba(255,255,255,0.08);
+
+    transition: 0.2s ease;
+}
+
+.expense-actions button:hover {
+    background: rgba(212,175,55,0.2);
+    border-color: rgba(212,175,55,0.5);
+}
+
+/* ============================= */
+/* TRIP STATUS CONTROL */
+/* ============================= */
+
+.trip-status-control {
+    margin-top: 25px;
+    padding: 22px 25px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    flex-wrap: wrap;
+
+    border-radius: 16px;
+
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+}
+
+.trip-status-control label {
+    font-weight: 600;
+    font-size: 15px;
+}
+
+.trip-status-control select {
+    min-width: 150px;
+
+    padding: 11px 40px 11px 14px;
+
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+
+    background: white;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    outline: none;
+
+    transition: 0.2s ease;
+}
+
+.trip-status-control select:focus {
+    border-color: #6366f1;
+
+    box-shadow:
+        0 0 0 3px rgba(99, 102, 241, 0.15);
+}
+
+.trip-status-control button {
+    padding: 11px 18px;
+
+    border: none;
+    border-radius: 10px;
+
+    background: linear-gradient(
+        135deg,
+        #6366f1,
+        #8b5cf6
+    );
+
+    color: white;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+.trip-status-control button:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 7px 18px rgba(99, 102, 241, 0.25);
+}
+
+#statusMessage {
+    width: 100%;
+
+    margin: 4px 0 0;
+
+    text-align: center;
+
+    font-size: 14px;
+}
+
+
+/* ============================= */
+/* MY TRIPS PAGE */
+/* ============================= */
+
+#tripList {
+    width: 90%;
+    max-width: 1100px;
+
+    margin: 35px auto;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fit, minmax(280px, 1fr));
+
+    gap: 25px;
+}
+
+
+/* ============================= */
+/* TRIP CARDS */
+/* ============================= */
+
+#tripList > div {
+
+    padding: 25px;
+
+    border-radius: 18px;
+
+    background: linear-gradient(
+        135deg,
+        #0d1b2a,
+        #123d3a
+    );
+
+    border: 1px solid rgba(255, 255, 255, 0.25);
+
+    color: white;
+
+    box-shadow:
+        0 12px 30px rgba(13, 27, 42, 0.35);
+
+    transition: 0.25s ease;
+}
+
+/* Card Hover */
+
+#tripList > div:hover {
+
+    transform: translateY(-5px);
+
+    box-shadow:
+        0 18px 40px rgba(30, 58, 95, 0.35);
+
+    border-color:
+        rgba(255, 255, 255, 0.45);
+}
+
+
+/* ============================= */
+/* TRIP TITLE */
+/* ============================= */
+
+#tripList h2 {
+
+    margin-top: 0;
+
+    margin-bottom: 15px;
+
+    font-size: 22px;
+
+    color: #ffffff;
+}
+
+
+/* ============================= */
+/* TRIP INFORMATION */
+/* ============================= */
+
+#tripList p {
+
+    margin: 8px 0;
+
+    color: #e0f2fe;
+
+    font-size: 14px;
+}
+
+
+/* ============================= */
+/* TRIP STATUS */
+/* ============================= */
+
+#tripList p:last-of-type {
+
+    display: inline-block;
+
+    margin-top: 12px;
+
+    padding: 6px 13px;
+
+    border-radius: 20px;
+
+    background:
+        rgba(255, 255, 255, 0.18);
+
+    border:
+        1px solid rgba(255, 255, 255, 0.3);
+
+    color: #ffffff;
+
+    font-weight: 600;
+
+    letter-spacing: 0.3px;
+}
+
+
+/* ============================= */
+/* OPEN TRIP BUTTON */
+/* ============================= */
+
+#tripList button {
+
+    width: 100%;
+
+    margin-top: 18px;
+
+    padding: 11px 16px;
+
+    border: 1px solid
+        rgba(255, 255, 255, 0.3);
+
+    border-radius: 10px;
+
+    background:
+        rgba(255, 255, 255, 0.15);
+
+    color: #ffffff;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+
+#tripList button:hover {
+
+    background:
+        rgba(255, 255, 255, 0.25);
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 6px 15px
+        rgba(15, 23, 42, 0.2);
+}
+
+
+/* ============================= */
+/* CREATE TRIP FORM */
+/* ============================= */
+
+#createTripForm {
+
+    width: 90%;
+
+    max-width: 650px;
+
+    margin: 30px auto;
+
+    padding: 30px;
+
+    border-radius: 18px;
+
+    background: linear-gradient(
+        135deg,
+        #87ceeb,
+        #4682b4,
+        #1e3a5f
+    );
+
+    border:
+        1px solid rgba(255, 255, 255, 0.25);
+
+    color: white;
+
+    box-shadow:
+        0 12px 30px
+        rgba(30, 58, 95, 0.25);
+}
+
+
+/* Create Trip Heading */
+
+#createTripForm h2 {
+
+    margin-top: 0;
+
+    font-size: 24px;
+
+    color: white;
+}
+
+
+/* Form Labels */
+
+#createTripForm label {
+
+    display: block;
+
+    margin-top: 8px;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    color: #e0f2fe;
+}
+
+
+/* Form Inputs */
+
+#createTripForm input {
+
+    width: 100%;
+
+    box-sizing: border-box;
+
+    margin: 8px 0 18px;
+
+    padding: 12px 14px;
+
+    border:
+        1px solid rgba(255, 255, 255, 0.3);
+
+    border-radius: 10px;
+
+    background:
+        rgba(255, 255, 255, 0.15);
+
+    color: white;
+
+    font-size: 14px;
+
+    outline: none;
+}
+
+
+#createTripForm input::placeholder {
+
+    color: rgba(255, 255, 255, 0.7);
+}
+
+
+#createTripForm input:focus {
+
+    border-color: white;
+
+    background:
+        rgba(255, 255, 255, 0.2);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(255, 255, 255, 0.12);
+}
+
+
+/* Create Trip Save Button */
+
+#createTripForm button {
+
+    width: 100%;
+
+    padding: 12px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background:
+        rgba(255, 255, 255, 0.2);
+
+    color: white;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+
+#createTripForm button:hover {
+
+    background:
+        rgba(255, 255, 255, 0.3);
+
+    transform: translateY(-2px);
+}
+
+
+/* ============================= */
+/* CREATE NEW TRIP BUTTON */
+/* ============================= */
+
+#createTripBtn {
+
+    display: block;
+
+    margin: 25px auto;
+
+    padding: 12px 22px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background: linear-gradient(
+        135deg,
+        #4682b4,
+        #1e3a5f
+    );
+
+    color: white;
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+
+    box-shadow:
+        0 8px 20px
+        rgba(30, 58, 95, 0.2);
+}
+
+
+#createTripBtn:hover {
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 10px 25px
+        rgba(30, 58, 95, 0.3);
+}
+
+
+/* ============================= */
+/* MOBILE */
+/* ============================= */
+
+@media (max-width: 600px) {
+
+    #tripList {
+
+        width: 92%;
+
+        grid-template-columns: 1fr;
+    }
+
+    #createTripForm {
+
+        width: 85%;
+
+        padding: 22px;
+    }
+
+}
