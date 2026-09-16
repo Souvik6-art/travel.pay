@@ -49,6 +49,35 @@
         </h1>
 
         <div id="tripInfo"></div>
+        <div class="trip-status-control">
+
+            <label for="tripStatus">
+                Trip Status
+            </label>
+
+            <select id="tripStatus">
+
+                <option value="PLANNED">
+                    Planned
+                </option>
+
+                <option value="ONGOING">
+                    Ongoing
+                </option>
+
+                <option value="COMPLETED">
+                    Completed
+                </option>
+
+            </select>
+
+            <button onclick="updateTripStatus()">
+                ✓ Update Status
+            </button>
+
+            <p id="statusMessage"></p>
+
+        </div>
 
     </section>
 

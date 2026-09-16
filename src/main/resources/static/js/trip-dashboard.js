@@ -40,6 +40,7 @@ async function loadTrip() {
                 ${trip.destination}
             </p>
 
+
             <p>
                 <strong>Start Date:</strong>
                 ${trip.startDate}
@@ -55,7 +56,8 @@ async function loadTrip() {
                 ${trip.status}
             </p>
         `;
-
+document.getElementById("tripStatus").value =
+    trip.status;
     } catch (error) {
 
         console.error("Trip error:", error);
@@ -150,6 +152,53 @@ function backToTrips() {
 
 
 // Start
+
+async function updateTripStatus() {
+
+    const status =
+        document.getElementById("tripStatus").value;
+
+    const statusMessage =
+        document.getElementById("statusMessage");
+
+    try {
+
+        statusMessage.textContent =
+            "Updating status...";
+
+        const response = await fetch(
+            `/api/trips/${userId}/${tripId}/status?status=${status}`,
+            {
+                method: "PUT"
+            }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.message || "Unable to update trip status"
+            );
+        }
+
+        statusMessage.textContent =
+            `Trip status updated to ${status}.`;
+
+        // Refresh trip information
+        loadTrip();
+
+    } catch (error) {
+
+        console.error(
+            "Trip status error:",
+            error
+        );
+
+        statusMessage.textContent =
+            error.message;
+    }
+}
 
 loadTrip();
 loadTripSummary();

@@ -155,7 +155,33 @@ public class TripController {
         tripRepository.delete(trip);
     }
 
+    @PutMapping("/{userId}/{tripId}/status")
+    public Trip updateTripStatus(
+            @PathVariable Long userId,
+            @PathVariable Long tripId,
+            @RequestParam String status) {
 
+        Trip trip = tripRepository.findById(tripId)
+                .orElseThrow(() ->
+                        new RuntimeException("Trip not found"));
+
+        if (!trip.getUser().getId().equals(userId)) {
+            throw new RuntimeException(
+                    "Trip does not belong to this user");
+        }
+
+        if (!status.equals("PLANNED") &&
+                !status.equals("ONGOING") &&
+                !status.equals("COMPLETED")) {
+
+            throw new RuntimeException(
+                    "Invalid trip status");
+        }
+
+        trip.setStatus(status);
+
+        return tripRepository.save(trip);
+    }
 
 
 }
