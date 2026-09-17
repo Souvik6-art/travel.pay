@@ -29,28 +29,28 @@ const customCategory =
 document.getElementById("customCategory");
 
 // Show / hide Custom Category input
-
 expenseCategory.addEventListener("change", function () {
 
-```
-if (expenseCategory.value === "Custom") {
+    if (this.value === "Custom") {
 
-    customCategoryContainer.style.display = "block";
+        customCategoryContainer.style.display = "block";
 
-    customCategory.required = true;
+        customCategory.disabled = false;
+        customCategory.required = true;
 
-} else {
+        customCategory.focus();
 
-    customCategoryContainer.style.display = "none";
+    } else {
 
-    customCategory.required = false;
+        customCategoryContainer.style.display = "none";
 
-    customCategory.value = "";
-}
-```
+        customCategory.disabled = true;
+        customCategory.required = false;
+
+        customCategory.value = "";
+    }
 
 });
-
 // ============================================================
 // ADD EXPENSE
 // ============================================================

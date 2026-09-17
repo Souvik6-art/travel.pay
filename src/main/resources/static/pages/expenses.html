@@ -102,7 +102,7 @@
 
                     <select id="expenseCategory" required>
 
-                        <option value="">
+                        <option value="" selected disabled>
                             Select Category
                         </option>
 
@@ -163,6 +163,28 @@
                         </option>
 
                     </select>
+
+                </div>
+
+
+                <!-- Custom Category -->
+
+                <div
+                        class="deposit-input"
+                        id="customCategoryContainer"
+                        style="display: none;"
+                >
+
+                    <label for="customCategory">
+                        Custom Category
+                    </label>
+
+                    <input
+                            type="text"
+                            id="customCategory"
+                            placeholder="Enter your own category"
+                            disabled
+                    >
 
                 </div>
 
