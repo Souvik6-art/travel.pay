@@ -1,3 +1,4 @@
+console.log("AUTH.JS LOADED");
 const registerForm = document.getElementById("registerForm");
 const registerMessage = document.getElementById("registerMessage");
 
@@ -70,8 +71,7 @@ if (loginForm) {
             loginMessage.textContent =
                 "Login successful! Redirecting...";
 
-          window.location.href = "trips.html";
-
+        window.location.href = "dashboard.html";
         } catch (error) {
 
             loginMessage.textContent = error.message;

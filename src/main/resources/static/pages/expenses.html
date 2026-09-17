@@ -3,51 +3,93 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    ```
+    <meta charset="UTF-8">
+
+    <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+    >
+
     <title>TravelPay | Expenses</title>
 
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="../css/dashboard.css">
-    ```
+    <link
+            rel="stylesheet" href="../css/style.css"
+    >
+
+    <link
+            rel="stylesheet" href="../css/dashboard.css"
+    >
 
 </head>
 
+
 <body>
+
 
 <header class="navbar">
 
-    ```
     <div class="logo">
         Travel<span>Pay</span>
     </div>
 
+
     <nav>
-        <a href="dashboard.html">Dashboard</a>
-        <a href="expenses.html">Expenses</a>
-        <a href="transactions.html">Transactions</a>
-        <a href="budget.html">Budget</a>
-        <a href="reports.html">Reports</a>
-        <a href="currency.html">Currency</a>
+
+        <a href="dashboard.html">
+            Dashboard
+        </a>
+
+        <a href="expenses.html">
+            Expenses
+        </a>
+
+        <a href="transactions.html">
+            Transactions
+        </a>
+
+        <a href="budget.html">
+            Budget
+        </a>
+
+        <a href="reports.html">
+            Reports
+        </a>
+
+        <a href="currency.html">
+            Currency
+        </a>
+
     </nav>
 
+
     <div class="nav-buttons">
-        <button id="logoutBtn" class="login-btn">
+
+        <button
+                id="logoutBtn"
+                class="login-btn"
+        >
             Logout
         </button>
+
     </div>
-    ```
 
 </header>
 
+
+
 <main class="dashboard-container">
 
-    ```
+
+    <!-- =====================================================
+         PAGE HEADING
+    ====================================================== -->
+
     <section class="dashboard-heading">
 
-        <p class="hero-tag">TRAVELPAY EXPENSES</p>
+        <p class="hero-tag">
+            TRAVELPAY EXPENSES
+        </p>
 
         <h1>
             Manage your expenses
@@ -60,19 +102,26 @@
     </section>
 
 
-    <!-- ================= ADD EXPENSE ================= -->
+
+    <!-- =====================================================
+         ADD EXPENSE
+    ====================================================== -->
 
     <section class="deposit-section">
 
         <div class="deposit-card">
 
-            <h2>Add New Expense</h2>
+            <h2>
+                Add New Expense
+            </h2>
 
             <p>
-                Record an expense from your travel wallet.
+                Record an expense from your trip.
             </p>
 
+
             <form id="expenseForm">
+
 
                 <!-- Expense Title -->
 
@@ -92,6 +141,7 @@
                 </div>
 
 
+
                 <!-- Expense Category -->
 
                 <div class="deposit-input">
@@ -100,63 +150,85 @@
                         Category
                     </label>
 
-                    <select id="expenseCategory" required>
 
-                        <option value="" selected disabled>
+                    <select
+                            id="expenseCategory"
+                            required
+                    >
+
+                        <option
+                                value=""
+                                selected
+                                disabled
+                        >
                             Select Category
                         </option>
+
 
                         <option value="Custom">
                             Custom
                         </option>
 
+
                         <option value="Accommodation">
                             Accommodation
                         </option>
+
 
                         <option value="Food & Dining">
                             Food & Dining
                         </option>
 
+
                         <option value="Transport">
                             Transport
                         </option>
+
 
                         <option value="Flights">
                             Flights
                         </option>
 
+
                         <option value="Activities & Entertainment">
                             Activities & Entertainment
                         </option>
+
 
                         <option value="Shopping">
                             Shopping
                         </option>
 
+
                         <option value="Health & Medical">
                             Health & Medical
                         </option>
+
 
                         <option value="Communication">
                             Communication
                         </option>
 
+
                         <option value="Travel Essentials">
                             Travel Essentials
                         </option>
+
 
                         <option value="Fees & Charges">
                             Fees & Charges
                         </option>
 
+
                         <option value="Visa & Documents">
                             Visa & Documents
                         </option>
 
+
                         <option value="Gifts">
                             Gifts
                         </option>
+
 
                         <option value="Other">
                             Other
@@ -165,6 +237,7 @@
                     </select>
 
                 </div>
+
 
 
                 <!-- Custom Category -->
@@ -176,34 +249,18 @@
                 >
 
                     <label for="customCategory">
-                        Custom Category
+                        Enter Custom Category
                     </label>
+
 
                     <input
                             type="text"
                             id="customCategory"
-                            placeholder="Enter your own category"
-                            disabled
+                            placeholder="Type your category here"
                     >
 
                 </div>
 
-
-                <!-- Custom Category -->
-
-                <div class="deposit-input" id="customCategoryContainer" style="display: none;">
-
-                    <label for="customCategory">
-                        Custom Category
-                    </label>
-
-                    <input
-                            type="text"
-                            id="customCategory"
-                            placeholder="Enter your own category"
-                    >
-
-                </div>
 
 
                 <!-- Expense Amount -->
@@ -213,6 +270,7 @@
                     <label for="expenseAmount">
                         Amount
                     </label>
+
 
                     <input
                             type="number"
@@ -226,34 +284,51 @@
                 </div>
 
 
-                <button type="submit" class="deposit-btn">
+
+                <button
+                        type="submit"
+                        class="deposit-btn"
+                >
                     Add Expense
                 </button>
 
+
             </form>
 
-            <p id="expenseMessage" class="deposit-message"></p>
+
+            <p
+                    id="expenseMessage"
+                    class="deposit-message"
+            ></p>
 
         </div>
 
     </section>
 
 
-    <!-- ================= TRIP EXPENSES ================= -->
+
+    <!-- =====================================================
+         TRIP EXPENSES
+    ====================================================== -->
 
     <section class="deposit-section">
 
         <div class="deposit-card">
 
-            <h2>Trip Expenses</h2>
+            <h2>
+                Trip Expenses
+            </h2>
 
             <p>
                 Expenses recorded for this trip.
             </p>
 
+
             <div id="expenseList">
 
-                <p>Loading expenses...</p>
+                <p>
+                    Loading expenses...
+                </p>
 
             </div>
 
@@ -262,7 +337,10 @@
     </section>
 
 
-    <!-- ================= EDIT EXPENSE ================= -->
+
+    <!-- =====================================================
+         EDIT EXPENSE
+    ====================================================== -->
 
     <section class="deposit-section">
 
@@ -272,13 +350,17 @@
                 style="display: none;"
         >
 
-            <h2>Edit Expense</h2>
+            <h2>
+                Edit Expense
+            </h2>
 
             <p>
                 Update the details of your expense.
             </p>
 
+
             <form id="editExpenseForm">
+
 
                 <!-- Edit Title -->
 
@@ -287,6 +369,7 @@
                     <label for="editExpenseTitle">
                         Expense Title
                     </label>
+
 
                     <input
                             type="text"
@@ -297,6 +380,7 @@
                 </div>
 
 
+
                 <!-- Edit Category -->
 
                 <div class="deposit-input">
@@ -305,63 +389,85 @@
                         Category
                     </label>
 
-                    <select id="editExpenseCategory" required>
 
-                        <option value="" selected disabled>
+                    <select
+                            id="editExpenseCategory"
+                            required
+                    >
+
+                        <option
+                                value=""
+                                selected
+                                disabled
+                        >
                             Select Category
                         </option>
+
 
                         <option value="Custom">
                             Custom
                         </option>
 
+
                         <option value="Accommodation">
                             Accommodation
                         </option>
+
 
                         <option value="Food & Dining">
                             Food & Dining
                         </option>
 
+
                         <option value="Transport">
                             Transport
                         </option>
+
 
                         <option value="Flights">
                             Flights
                         </option>
 
+
                         <option value="Activities & Entertainment">
                             Activities & Entertainment
                         </option>
+
 
                         <option value="Shopping">
                             Shopping
                         </option>
 
+
                         <option value="Health & Medical">
                             Health & Medical
                         </option>
+
 
                         <option value="Communication">
                             Communication
                         </option>
 
+
                         <option value="Travel Essentials">
                             Travel Essentials
                         </option>
+
 
                         <option value="Fees & Charges">
                             Fees & Charges
                         </option>
 
+
                         <option value="Visa & Documents">
                             Visa & Documents
                         </option>
 
+
                         <option value="Gifts">
                             Gifts
                         </option>
+
 
                         <option value="Other">
                             Other
@@ -370,6 +476,7 @@
                     </select>
 
                 </div>
+
 
 
                 <!-- Edit Custom Category -->
@@ -384,13 +491,15 @@
                         Enter Custom Category
                     </label>
 
+
                     <input
                             type="text"
                             id="editCustomCategory"
-                            placeholder="Enter your own category"
+                            placeholder="Type your category here"
                     >
 
                 </div>
+
 
 
                 <!-- Edit Amount -->
@@ -401,6 +510,7 @@
                         Amount
                     </label>
 
+
                     <input
                             type="number"
                             id="editExpenseAmount"
@@ -410,6 +520,7 @@
                     >
 
                 </div>
+
 
 
                 <button
@@ -428,7 +539,9 @@
                     Cancel
                 </button>
 
+
             </form>
+
 
             <p
                     id="editExpenseMessage"
@@ -438,13 +551,16 @@
         </div>
 
     </section>
-    ```
+
 
 </main>
+
+
 
 <script src="../js/auth.js"></script>
 
 <script src="../js/expenses.js"></script>
+
 
 </body>
 

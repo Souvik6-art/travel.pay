@@ -137,3 +137,11 @@ if (depositForm) {
     });
 
 }
+
+const myTripsCard = document.getElementById("myTripsCard");
+
+if (myTripsCard) {
+    myTripsCard.addEventListener("click", function () {
+        window.location.href = "trips.html";
+    });
+}
