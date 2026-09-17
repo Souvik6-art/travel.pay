@@ -1,302 +1,563 @@
-
 const userId = localStorage.getItem("userId");
 const tripId = localStorage.getItem("tripId");
 
-
-
-
-
 if (!userId) {
-    window.location.href = "login.html";
+window.location.href = "login.html";
 }
 
 if (!tripId) {
-    window.location.href = "trips.html";
+window.location.href = "trips.html";
 }
 
+const expenseForm =
+document.getElementById("expenseForm");
 
-const expenseForm = document.getElementById("expenseForm");
-const expenseMessage = document.getElementById("expenseMessage");
+const expenseMessage =
+document.getElementById("expenseMessage");
 
+// ============================================================
+// ADD EXPENSE - CATEGORY
+// ============================================================
+
+const expenseCategory =
+document.getElementById("expenseCategory");
+
+const customCategoryContainer =
+document.getElementById("customCategoryContainer");
+
+const customCategory =
+document.getElementById("customCategory");
+
+// Show / hide Custom Category input
+
+expenseCategory.addEventListener("change", function () {
+
+```
+if (expenseCategory.value === "Custom") {
+
+    customCategoryContainer.style.display = "block";
+
+    customCategory.required = true;
+
+} else {
+
+    customCategoryContainer.style.display = "none";
+
+    customCategory.required = false;
+
+    customCategory.value = "";
+}
+```
+
+});
+
+// ============================================================
+// ADD EXPENSE
+// ============================================================
 
 expenseForm.addEventListener("submit", async function (event) {
 
-    event.preventDefault();
+```
+event.preventDefault();
 
-    const title =
-        document.getElementById("expenseTitle").value;
 
-    const category =
-        document.getElementById("expenseCategory").value;
+const title =
+    document.getElementById("expenseTitle").value.trim();
 
-    const amount = Number(
+
+let category =
+    document.getElementById("expenseCategory").value;
+
+
+// If Custom is selected
+
+if (category === "Custom") {
+
+    category =
+        document.getElementById("customCategory").value.trim();
+
+
+    if (!category) {
+
+        expenseMessage.textContent =
+            "Please enter a custom category.";
+
+        return;
+    }
+}
+
+
+const amount =
+    Number(
         document.getElementById("expenseAmount").value
     );
 
 
-    if (amount <= 0) {
+if (amount <= 0) {
 
-        expenseMessage.textContent =
-            "Expense amount must be greater than zero.";
+    expenseMessage.textContent =
+        "Expense amount must be greater than zero.";
+
+    return;
+}
+
+
+try {
+
+    expenseMessage.textContent =
+        "Adding expense...";
+
+
+    const response = await fetch(
+        `/api/expenses/${userId}/${tripId}`,
+        {
+            method: "POST",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify({
+                title: title,
+                category: category,
+                amount: amount
+            })
+        }
+    );
+
+
+    const data =
+        await response.json();
+
+
+    if (!response.ok) {
+
+        throw new Error(
+            data.message || "Unable to add expense"
+        );
+    }
+
+
+    expenseMessage.textContent =
+        `₹${amount.toFixed(2)} expense added successfully!`;
+
+
+    // Reset form
+
+    expenseForm.reset();
+
+
+    // Hide custom category field
+
+    customCategoryContainer.style.display = "none";
+
+    customCategory.required = false;
+
+
+    // Refresh expense list
+
+    loadExpenses();
+
+
+} catch (error) {
+
+    console.error(
+        "Expense error:",
+        error
+    );
+
+
+    expenseMessage.textContent =
+        error.message;
+}
+```
+
+});
+
+// ============================================================
+// LOAD EXPENSES
+// ============================================================
+
+async function loadExpenses() {
+
+```
+const expenseList =
+    document.getElementById("expenseList");
+
+
+try {
+
+    const response = await fetch(
+        `/api/expenses/user/${userId}/trip/${tripId}`
+    );
+
+
+    if (!response.ok) {
+
+        throw new Error(
+            "Unable to load trip expenses"
+        );
+    }
+
+
+    const expenses =
+        await response.json();
+
+
+    console.log(
+        "Trip Expenses:",
+        expenses
+    );
+
+
+    if (expenses.length === 0) {
+
+        expenseList.innerHTML =
+            "<p>No expenses recorded for this trip yet.</p>";
 
         return;
     }
 
 
-    try {
-
-        expenseMessage.textContent =
-            "Adding expense...";
+    expenseList.innerHTML = "";
 
 
-        const response = await fetch(
-            `/api/expenses/${userId}/${tripId}`,
-            {
-                method: "POST",
+    expenses.forEach(function (expense) {
 
-                headers: {
-                    "Content-Type": "application/json"
-                },
+        const expenseItem =
+            document.createElement("div");
 
-                body: JSON.stringify({
-                    title: title,
-                    category: category,
-                    amount: amount
-                })
-            }
+
+        expenseItem.className =
+            "expense-item";
+
+
+        expenseItem.innerHTML = `
+
+            <div class="expense-info">
+
+                <h3>
+                    ${expense.title}
+                </h3>
+
+                <p>
+                    ${expense.category}
+                </p>
+
+                <small>
+                    ${new Date(
+                        expense.expenseDate
+                    ).toLocaleString()}
+                </small>
+
+            </div>
+
+
+            <div class="expense-amount">
+
+                <strong>
+                    ₹${Number(
+                        expense.amount
+                    ).toFixed(2)}
+                </strong>
+
+            </div>
+
+
+            <div class="expense-actions">
+
+                <button
+                    onclick="editExpense(${expense.id})">
+                    Edit
+                </button>
+
+                <button
+                    onclick="deleteExpense(${expense.id})">
+                    Delete
+                </button>
+
+            </div>
+
+        `;
+
+
+        expenseList.appendChild(
+            expenseItem
         );
 
-
-        const data = await response.json();
-
-
-        if (!response.ok) {
-
-            throw new Error(
-                data.message || "Unable to add expense"
-            );
-        }
+    });
 
 
-        expenseMessage.textContent =
-            `₹${amount.toFixed(2)} expense added successfully!`;
+} catch (error) {
+
+    console.error(
+        "Expense loading error:",
+        error
+    );
 
 
-        expenseForm.reset();
-
-        // Refresh the expense list
-        loadExpenses();
-
-
-    } catch (error) {
-
-        console.error("Expense error:", error);
-
-        expenseMessage.textContent =
-            error.message;
-
-    }
-
-});
-
-
-async function loadExpenses() {
-
-    const expenseList =
-        document.getElementById("expenseList");
-
-    try {
-
-        const response = await fetch(
-            `/api/expenses/user/${userId}/trip/${tripId}`
-        );
-
-        if (!response.ok) {
-
-            throw new Error(
-                "Unable to load trip expenses"
-            );
-        }
-
-        const expenses = await response.json();
-
-        console.log(
-            "Trip Expenses:",
-            expenses
-        );
-
-
-        if (expenses.length === 0) {
-
-            expenseList.innerHTML =
-                "<p>No expenses recorded for this trip yet.</p>";
-
-            return;
-        }
-
-
-        expenseList.innerHTML = "";
-
-
-        expenses.forEach(function (expense) {
-
-            const expenseItem =
-                document.createElement("div");
-
-            expenseItem.className =
-                "expense-item";
-
-
-            expenseItem.innerHTML = `
-                <div class="expense-info">
-
-                    <h3>
-                        ${expense.title}
-                    </h3>
-
-                    <p>
-                        ${expense.category}
-                    </p>
-
-                    <small>
-                        ${new Date(
-                            expense.expenseDate
-                        ).toLocaleString()}
-                    </small>
-
-                </div>
-
-                <div class="expense-amount">
-
-                    <strong>
-                        ₹${Number(
-                            expense.amount
-                        ).toFixed(2)}
-                    </strong>
-
-                </div>
-
-                <div class="expense-actions">
-
-                    <button
-                        onclick="editExpense(${expense.id})">
-                        Edit
-                    </button>
-
-                    <button
-                        onclick="deleteExpense(${expense.id})">
-                        Delete
-                    </button>
-
-                </div>
-            `;
-
-
-            expenseList.appendChild(
-                expenseItem
-            );
-
-        });
-
-    } catch (error) {
-
-        console.error(
-            "Expense loading error:",
-            error
-        );
-
-        expenseList.innerHTML =
-            `<p>${error.message}</p>`;
-    }
+    expenseList.innerHTML =
+        `<p>${error.message}</p>`;
 }
+```
+
+}
+
+// ============================================================
+// EDIT EXPENSE
+// ============================================================
 
 let editingExpenseId = null;
 
+const editExpenseCategory =
+document.getElementById("editExpenseCategory");
+
+const editCustomCategoryContainer =
+document.getElementById("editCustomCategoryContainer");
+
+const editCustomCategory =
+document.getElementById("editCustomCategory");
+
+// Show / hide Custom Category while editing
+
+editExpenseCategory.addEventListener("change", function () {
+
+```
+if (editExpenseCategory.value === "Custom") {
+
+    editCustomCategoryContainer.style.display =
+        "block";
+
+    editCustomCategory.required = true;
+
+} else {
+
+    editCustomCategoryContainer.style.display =
+        "none";
+
+    editCustomCategory.required = false;
+
+    editCustomCategory.value = "";
+}
+```
+
+});
+
 async function editExpense(expenseId) {
 
-    try {
+```
+try {
 
-        const response = await fetch(
-            `/api/expenses/user/${userId}/trip/${tripId}`
+    const response = await fetch(
+        `/api/expenses/user/${userId}/trip/${tripId}`
+    );
+
+
+    if (!response.ok) {
+
+        throw new Error(
+            "Unable to load expense"
         );
+    }
 
-        if (!response.ok) {
-            throw new Error("Unable to load expense");
-        }
 
-        const expenses = await response.json();
+    const expenses =
+        await response.json();
 
-        const expense = expenses.find(function (item) {
+
+    const expense =
+        expenses.find(function (item) {
+
             return item.id === expenseId;
+
         });
 
-        if (!expense) {
-            throw new Error("Expense not found");
-        }
 
-        // Store the expense ID
-        editingExpenseId = expenseId;
+    if (!expense) {
 
-        // Fill the edit form
-        document.getElementById("editExpenseTitle").value =
-            expense.title;
+        throw new Error(
+            "Expense not found"
+        );
+    }
 
-        document.getElementById("editExpenseCategory").value =
+
+    // Store expense ID
+
+    editingExpenseId =
+        expenseId;
+
+
+    // Fill title
+
+    document.getElementById(
+        "editExpenseTitle"
+    ).value =
+        expense.title;
+
+
+    // Check whether category is one of our predefined categories
+
+    const predefinedCategories = [
+
+        "Accommodation",
+        "Food & Dining",
+        "Transport",
+        "Flights",
+        "Activities & Entertainment",
+        "Shopping",
+        "Health & Medical",
+        "Communication",
+        "Travel Essentials",
+        "Fees & Charges",
+        "Visa & Documents",
+        "Gifts",
+        "Other"
+
+    ];
+
+
+    if (predefinedCategories.includes(expense.category)) {
+
+        editExpenseCategory.value =
             expense.category;
 
-        document.getElementById("editExpenseAmount").value =
-            expense.amount;
 
-        // Show edit section
-        document.getElementById("editExpenseSection").style.display =
+        editCustomCategoryContainer.style.display =
+            "none";
+
+        editCustomCategory.required =
+            false;
+
+        editCustomCategory.value = "";
+
+    } else {
+
+        // Existing category is a custom category
+
+        editExpenseCategory.value =
+            "Custom";
+
+
+        editCustomCategoryContainer.style.display =
             "block";
 
-        // Scroll to edit form
-        document.getElementById("editExpenseSection").scrollIntoView({
-            behavior: "smooth"
-        });
+        editCustomCategory.required =
+            true;
 
-    } catch (error) {
-
-        console.error(
-            "Edit expense error:",
-            error
-        );
-
-        alert(error.message);
+        editCustomCategory.value =
+            expense.category;
     }
+
+
+    // Fill amount
+
+    document.getElementById(
+        "editExpenseAmount"
+    ).value =
+        expense.amount;
+
+
+    // Show edit section
+
+    document.getElementById(
+        "editExpenseSection"
+    ).style.display =
+        "block";
+
+
+    // Scroll to edit form
+
+    document.getElementById(
+        "editExpenseSection"
+    ).scrollIntoView({
+        behavior: "smooth"
+    });
+
+
+} catch (error) {
+
+    console.error(
+        "Edit expense error:",
+        error
+    );
+
+
+    alert(error.message);
+}
+```
+
 }
 
-//********************************************************
-
+// ============================================================
+// UPDATE EXPENSE
+// ============================================================
 
 const editExpenseForm =
-    document.getElementById("editExpenseForm");
+document.getElementById("editExpenseForm");
 
 const cancelEditBtn =
-    document.getElementById("cancelEditBtn");
+document.getElementById("cancelEditBtn");
 
-editExpenseForm.addEventListener("submit", async function (event) {
+editExpenseForm.addEventListener(
+"submit",
+async function (event) {
 
+```
     event.preventDefault();
+
 
     if (!editingExpenseId) {
         return;
     }
 
-    const title =
-        document.getElementById("editExpenseTitle").value;
 
-    const category =
-        document.getElementById("editExpenseCategory").value;
+    const title =
+        document.getElementById(
+            "editExpenseTitle"
+        ).value.trim();
+
+
+    let category =
+        document.getElementById(
+            "editExpenseCategory"
+        ).value;
+
+
+    // If Custom is selected
+
+    if (category === "Custom") {
+
+        category =
+            document.getElementById(
+                "editCustomCategory"
+            ).value.trim();
+
+
+        if (!category) {
+
+            document.getElementById(
+                "editExpenseMessage"
+            ).textContent =
+                "Please enter a custom category.";
+
+            return;
+        }
+    }
+
 
     const amount =
         Number(
-            document.getElementById("editExpenseAmount").value
+            document.getElementById(
+                "editExpenseAmount"
+            ).value
         );
 
+
     const editExpenseMessage =
-        document.getElementById("editExpenseMessage");
+        document.getElementById(
+            "editExpenseMessage"
+        );
+
 
     if (amount <= 0) {
 
@@ -306,10 +567,12 @@ editExpenseForm.addEventListener("submit", async function (event) {
         return;
     }
 
+
     try {
 
         editExpenseMessage.textContent =
             "Updating expense...";
+
 
         const response = await fetch(
             `/api/expenses/${userId}/${tripId}/${editingExpenseId}`,
@@ -328,31 +591,43 @@ editExpenseForm.addEventListener("submit", async function (event) {
             }
         );
 
-        const data = await response.json();
+
+        const data =
+            await response.json();
+
 
         if (!response.ok) {
 
             throw new Error(
-                data.message || "Unable to update expense"
+                data.message ||
+                "Unable to update expense"
             );
         }
+
 
         editExpenseMessage.textContent =
             "Expense updated successfully!";
 
-        // Hide form after successful update
+
+        // Hide edit form
+
         setTimeout(function () {
 
             document.getElementById(
                 "editExpenseSection"
-            ).style.display = "none";
+            ).style.display =
+                "none";
 
         }, 800);
 
+
         editingExpenseId = null;
 
+
         // Refresh expense list
+
         loadExpenses();
+
 
     } catch (error) {
 
@@ -361,74 +636,110 @@ editExpenseForm.addEventListener("submit", async function (event) {
             error
         );
 
+
         editExpenseMessage.textContent =
             error.message;
     }
-});
 
-//*********
-cancelEditBtn.addEventListener("click", function () {
+}
+```
 
+);
+
+// ============================================================
+// CANCEL EDIT
+// ============================================================
+
+cancelEditBtn.addEventListener(
+"click",
+function () {
+
+```
     editingExpenseId = null;
+
 
     editExpenseForm.reset();
 
+
+    editCustomCategoryContainer.style.display =
+        "none";
+
+    editCustomCategory.required =
+        false;
+
+
     document.getElementById(
         "editExpenseSection"
-    ).style.display = "none";
+    ).style.display =
+        "none";
 
-});
+}
+```
 
+);
 
+// ============================================================
+// DELETE EXPENSE
+// ============================================================
 
-//*******************************************************************
 async function deleteExpense(expenseId) {
 
-    const confirmed =
-        confirm(
-            "Are you sure you want to delete this expense?"
-        );
+```
+const confirmed =
+    confirm(
+        "Are you sure you want to delete this expense?"
+    );
 
 
-    if (!confirmed) {
-        return;
-    }
-
-
-    try {
-
-        const response = await fetch(
-            `/api/expenses/${userId}/${tripId}/${expenseId}`,
-            {
-                method: "DELETE"
-            }
-        );
-
-
-        if (!response.ok) {
-
-            throw new Error(
-                "Unable to delete expense"
-            );
-        }
-
-
-        alert("Expense deleted successfully!");
-
-        loadExpenses();
-
-
-    } catch (error) {
-
-        console.error(
-            "Delete expense error:",
-            error
-        );
-
-        alert(error.message);
-    }
+if (!confirmed) {
+    return;
 }
 
 
-loadExpenses();
+try {
 
+    const response = await fetch(
+        `/api/expenses/${userId}/${tripId}/${expenseId}`,
+        {
+            method: "DELETE"
+        }
+    );
+
+
+    if (!response.ok) {
+
+        throw new Error(
+            "Unable to delete expense"
+        );
+    }
+
+
+    alert(
+        "Expense deleted successfully!"
+    );
+
+
+    loadExpenses();
+
+
+} catch (error) {
+
+    console.error(
+        "Delete expense error:",
+        error
+    );
+
+
+    alert(
+        error.message
+    );
+}
+```
+
+}
+
+// ============================================================
+// INITIAL LOAD
+// ============================================================
+
+loadExpenses();

@@ -1,20 +1,25 @@
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    ```
     <title>TravelPay | Expenses</title>
 
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/dashboard.css">
+    ```
+
 </head>
 
 <body>
 
 <header class="navbar">
 
+    ```
     <div class="logo">
         Travel<span>Pay</span>
     </div>
@@ -33,12 +38,13 @@
             Logout
         </button>
     </div>
+    ```
 
 </header>
 
-
 <main class="dashboard-container">
 
+    ```
     <section class="dashboard-heading">
 
         <p class="hero-tag">TRAVELPAY EXPENSES</p>
@@ -54,6 +60,8 @@
     </section>
 
 
+    <!-- ================= ADD EXPENSE ================= -->
+
     <section class="deposit-section">
 
         <div class="deposit-card">
@@ -66,6 +74,8 @@
 
             <form id="expenseForm">
 
+                <!-- Expense Title -->
+
                 <div class="deposit-input">
 
                     <label for="expenseTitle">
@@ -75,12 +85,14 @@
                     <input
                             type="text"
                             id="expenseTitle"
-                            placeholder="e.g. Hotel, Food, Taxi"
+                            placeholder="e.g. Hotel, Dinner, Taxi"
                             required
                     >
 
                 </div>
 
+
+                <!-- Expense Category -->
 
                 <div class="deposit-input">
 
@@ -88,15 +100,95 @@
                         Category
                     </label>
 
+                    <select id="expenseCategory" required>
+
+                        <option value="">
+                            Select Category
+                        </option>
+
+                        <option value="Custom">
+                            Custom
+                        </option>
+
+                        <option value="Accommodation">
+                            Accommodation
+                        </option>
+
+                        <option value="Food & Dining">
+                            Food & Dining
+                        </option>
+
+                        <option value="Transport">
+                            Transport
+                        </option>
+
+                        <option value="Flights">
+                            Flights
+                        </option>
+
+                        <option value="Activities & Entertainment">
+                            Activities & Entertainment
+                        </option>
+
+                        <option value="Shopping">
+                            Shopping
+                        </option>
+
+                        <option value="Health & Medical">
+                            Health & Medical
+                        </option>
+
+                        <option value="Communication">
+                            Communication
+                        </option>
+
+                        <option value="Travel Essentials">
+                            Travel Essentials
+                        </option>
+
+                        <option value="Fees & Charges">
+                            Fees & Charges
+                        </option>
+
+                        <option value="Visa & Documents">
+                            Visa & Documents
+                        </option>
+
+                        <option value="Gifts">
+                            Gifts
+                        </option>
+
+                        <option value="Other">
+                            Other
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- Custom Category -->
+
+                <div
+                        class="deposit-input"
+                        id="customCategoryContainer"
+                        style="display: none;"
+                >
+
+                    <label for="customCategory">
+                        Custom Category
+                    </label>
+
                     <input
                             type="text"
-                            id="expenseCategory"
-                            placeholder="e.g. Food"
-                            required
+                            id="customCategory"
+                            placeholder="Enter your category"
                     >
 
                 </div>
 
+
+                <!-- Expense Amount -->
 
                 <div class="deposit-input">
 
@@ -128,6 +220,9 @@
 
     </section>
 
+
+    <!-- ================= TRIP EXPENSES ================= -->
+
     <section class="deposit-section">
 
         <div class="deposit-card">
@@ -148,9 +243,16 @@
 
     </section>
 
+
+    <!-- ================= EDIT EXPENSE ================= -->
+
     <section class="deposit-section">
 
-        <div class="deposit-card" id="editExpenseSection" style="display: none;">
+        <div
+                class="deposit-card"
+                id="editExpenseSection"
+                style="display: none;"
+        >
 
             <h2>Edit Expense</h2>
 
@@ -159,6 +261,8 @@
             </p>
 
             <form id="editExpenseForm">
+
+                <!-- Edit Title -->
 
                 <div class="deposit-input">
 
@@ -174,19 +278,104 @@
 
                 </div>
 
+
+                <!-- Edit Category -->
+
                 <div class="deposit-input">
 
                     <label for="editExpenseCategory">
                         Category
                     </label>
 
+                    <select id="editExpenseCategory" required>
+
+                        <option value="">
+                            Select Category
+                        </option>
+
+                        <option value="Custom">
+                            Custom
+                        </option>
+
+                        <option value="Accommodation">
+                            Accommodation
+                        </option>
+
+                        <option value="Food & Dining">
+                            Food & Dining
+                        </option>
+
+                        <option value="Transport">
+                            Transport
+                        </option>
+
+                        <option value="Flights">
+                            Flights
+                        </option>
+
+                        <option value="Activities & Entertainment">
+                            Activities & Entertainment
+                        </option>
+
+                        <option value="Shopping">
+                            Shopping
+                        </option>
+
+                        <option value="Health & Medical">
+                            Health & Medical
+                        </option>
+
+                        <option value="Communication">
+                            Communication
+                        </option>
+
+                        <option value="Travel Essentials">
+                            Travel Essentials
+                        </option>
+
+                        <option value="Fees & Charges">
+                            Fees & Charges
+                        </option>
+
+                        <option value="Visa & Documents">
+                            Visa & Documents
+                        </option>
+
+                        <option value="Gifts">
+                            Gifts
+                        </option>
+
+                        <option value="Other">
+                            Other
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- Edit Custom Category -->
+
+                <div
+                        class="deposit-input"
+                        id="editCustomCategoryContainer"
+                        style="display: none;"
+                >
+
+                    <label for="editCustomCategory">
+                        Custom Category
+                    </label>
+
                     <input
                             type="text"
-                            id="editExpenseCategory"
-                            required
+                            id="editCustomCategory"
+                            placeholder="Enter your category"
                     >
 
                 </div>
+
+
+                <!-- Edit Amount -->
 
                 <div class="deposit-input">
 
@@ -204,9 +393,14 @@
 
                 </div>
 
-                <button type="submit" class="deposit-btn">
+
+                <button
+                        type="submit"
+                        class="deposit-btn"
+                >
                     Update Expense
                 </button>
+
 
                 <button
                         type="button"
@@ -218,16 +412,20 @@
 
             </form>
 
-            <p id="editExpenseMessage" class="deposit-message"></p>
+            <p
+                    id="editExpenseMessage"
+                    class="deposit-message"
+            ></p>
 
         </div>
 
     </section>
+    ```
 
 </main>
 
-
 <script src="../js/auth.js"></script>
+
 <script src="../js/expenses.js"></script>
 
 </body>
