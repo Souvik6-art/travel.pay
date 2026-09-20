@@ -58,15 +58,9 @@ public class DashboardController {
                 .mapToDouble(transaction ->
                         transaction.getAmount())
                 .sum();
-
-        double totalTransactionExpenses = transactionRepository
-                .findByUserId(userId)
-                .stream()
-                .filter(transaction ->
-                        "EXPENSE".equalsIgnoreCase(transaction.getType()))
-                .mapToDouble(transaction ->
-                        transaction.getAmount())
-                .sum();
+// Get total expenses from all trips
+      /*  double totalExpenses =
+                expenseRepository.getTotalExpensesByUserId(userId);*/
 
         // Create dashboard response
         DashboardResponse response =
@@ -83,7 +77,7 @@ public class DashboardController {
 
         response.setTotalDeposits(totalDeposits);
 
-        response.setTotalExpenses(totalTransactionExpenses);
+        response.setTotalExpenses(totalExpenses);
 
         return response;
     }

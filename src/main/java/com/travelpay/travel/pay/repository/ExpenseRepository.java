@@ -54,4 +54,14 @@ public interface ExpenseRepository extends JpaRepository<Expense, Long> {
     ORDER BY MONTH(e.expenseDate)
     """)
     List<Object[]> getMonthlySpendingForTrip(@Param("tripId") Long tripId);
+
+
+    @Query("""
+    SELECT e.trip.id, e.trip.tripName, COALESCE(SUM(e.amount), 0)
+    FROM Expense e
+    WHERE e.user.id = :userId
+    GROUP BY e.trip.id, e.trip.tripName
+    ORDER BY e.trip.id
+    """)
+    List<Object[]> getTotalExpensesByTrip(@Param("userId") Long userId);
 }

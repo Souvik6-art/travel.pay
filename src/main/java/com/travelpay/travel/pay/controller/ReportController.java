@@ -214,5 +214,32 @@ public class ReportController {
 
         return summary;
     }
+
+
+    @GetMapping("/user/{userId}/trip-totals")
+    public Map<String, Double> getTripWiseExpenses(
+            @PathVariable Long userId) {
+
+        userRepository.findById(userId)
+                .orElseThrow(() ->
+                        new RuntimeException("User not found"));
+
+        List<Object[]> results =
+                expenseRepository.getTotalExpensesByTrip(userId);
+
+        Map<String, Double> tripTotals =
+                new LinkedHashMap<>();
+
+        for (Object[] row : results) {
+
+            String tripName = (String) row[1];
+            Double total = ((Number) row[2]).doubleValue();
+
+            tripTotals.put(tripName, total);
+        }
+
+        return tripTotals;
+    }
+
 }
 

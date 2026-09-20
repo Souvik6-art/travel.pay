@@ -145,3 +145,24 @@ if (myTripsCard) {
         window.location.href = "trips.html";
     });
 }
+
+//**************************************************************
+const totalExpensesCard =
+    document.getElementById("totalExpensesCard");
+
+if (totalExpensesCard) {
+    totalExpensesCard.addEventListener("click", function () {
+
+        window.location.href = "trip-expenses.html";
+
+    });
+}
+//***************************************************************
+const totalExpensesCard =
+    document.getElementById("totalExpensesCard");
+
+if (totalExpensesCard) {
+    totalExpensesCard.addEventListener("click", function () {
+        window.location.href = "trip-expenses.html";
+    });
+}
