@@ -1,3 +1,4 @@
+console.log("DASHBOARD JS LOADED");
 const userId = localStorage.getItem("userId");
 
 if (!userId) {
@@ -155,14 +156,5 @@ if (totalExpensesCard) {
 
         window.location.href = "trip-expenses.html";
 
-    });
-}
-//***************************************************************
-const totalExpensesCard =
-    document.getElementById("totalExpensesCard");
-
-if (totalExpensesCard) {
-    totalExpensesCard.addEventListener("click", function () {
-        window.location.href = "trip-expenses.html";
     });
 }

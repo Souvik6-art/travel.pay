@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Trip Expenses - TravelPay</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="../css/trip-expenses.css">
+</head>
+
+<body>
+
+<nav>
+    <h2>TravelPay</h2>
+
+    <a href="dashboard.html">Dashboard</a>
+    <a href="currency.html">Currency</a>
+
+    <button onclick="logout()">Logout</button>
+</nav>
+
+<div class="page-container">
+
+    <h1>Expenses by Trip</h1>
+
+    <p>
+        View the total expenses for each of your trips.
+    </p>
+
+    <div id="tripExpensesContainer">
+        <p>Loading expenses...</p>
+    </div>
+
+</div>
+
+<script src="../js/auth.js"></script>
+<script src="../js/trip-expenses.js"></script>
+
+</body>
+</html>
