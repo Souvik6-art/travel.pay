@@ -158,3 +158,16 @@ if (totalExpensesCard) {
 
     });
 }
+//************************************
+const totalDepositsCard =
+    document.getElementById("totalDepositsCard");
+
+if (totalDepositsCard) {
+
+    totalDepositsCard.addEventListener("click", function () {
+
+        window.location.href = "deposit-history.html";
+
+    });
+
+}
