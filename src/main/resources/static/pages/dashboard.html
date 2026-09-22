@@ -112,15 +112,30 @@
 
     <section class="cash-flow-grid">
 
+
         <div class="cash-card" id="totalDepositsCard">
 
             <div class="cash-icon">
                 ↓
             </div>
 
-            <div>
+            <div class="deposit-content">
+
                 <p>Total Deposits</p>
+
                 <h3 id="totalDeposits">₹0.00</h3>
+
+                <span id="depositHistoryToggle">
+            Click to view deposit history
+        </span>
+
+                <!-- Deposit history will appear here -->
+                <div id="depositHistory" style="display: none;">
+
+                    <p>Loading deposit history...</p>
+
+                </div>
+
             </div>
 
         </div>

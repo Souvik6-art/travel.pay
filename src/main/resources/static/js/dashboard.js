@@ -147,7 +147,7 @@ if (myTripsCard) {
     });
 }
 
-//**************************************************************
+//**************************************************************/
 const totalExpensesCard =
     document.getElementById("totalExpensesCard");
 
@@ -158,16 +158,100 @@ if (totalExpensesCard) {
 
     });
 }
-//************************************
+/************************************/
 const totalDepositsCard =
     document.getElementById("totalDepositsCard");
 
+const depositHistory =
+    document.getElementById("depositHistory");
+
+let depositHistoryLoaded = false;
+
 if (totalDepositsCard) {
 
-    totalDepositsCard.addEventListener("click", function () {
+    totalDepositsCard.addEventListener("click", async function () {
 
-        window.location.href = "deposit-history.html";
+        if (depositHistory.style.display === "block") {
+            depositHistory.style.display = "none";
+            return;
+        }
+
+        depositHistory.style.display = "block";
+
+        if (depositHistoryLoaded) {
+            return;
+        }
+
+        try {
+
+            const response = await fetch(
+                `/api/transactions/user/${userId}`
+            );
+
+            if (!response.ok) {
+                throw new Error("Failed to load deposit history");
+            }
+
+            const transactions = await response.json();
+
+            const deposits = transactions
+                .filter(transaction =>
+                    String(transaction.type).toUpperCase() === "DEPOSIT"
+                )
+                .sort((a, b) =>
+                    new Date(b.transactionDate) -
+                    new Date(a.transactionDate)
+                );
+
+            if (deposits.length === 0) {
+
+                depositHistory.innerHTML =
+                    "<p>No deposits found.</p>";
+
+                return;
+            }
+
+            depositHistory.innerHTML = "";
+
+            deposits.forEach(transaction => {
+
+                const amount =
+                    Number(transaction.amount) || 0;
+
+                const date =
+                    new Date(transaction.transactionDate)
+                        .toLocaleString("en-IN", {
+                            dateStyle: "medium",
+                            timeStyle: "short"
+                        });
+
+                const depositItem =
+                    document.createElement("div");
+
+                depositItem.className = "deposit-history-item";
+
+                depositItem.innerHTML = `
+                    <h4>₹${amount.toFixed(2)}</h4>
+                    <p>${transaction.description || "Wallet deposit"}</p>
+                    <span>${date}</span>
+                `;
+
+                depositHistory.appendChild(depositItem);
+
+            });
+
+            depositHistoryLoaded = true;
+
+        } catch (error) {
+
+            console.error(
+                "Deposit history error:",
+                error
+            );
+
+            depositHistory.innerHTML =
+                "<p>Unable to load deposit history.</p>";
+        }
 
     });
-
 }

@@ -460,3 +460,32 @@
     transform: translateY(-5px);
     box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
 }
+/********************************************/
+#totalDepositsCard {
+    cursor: pointer;
+}
+
+#depositHistory {
+    margin-top: 20px;
+    width: 100%;
+}
+
+.deposit-history-item {
+    padding: 12px;
+    margin-top: 10px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.deposit-history-item h4 {
+    margin: 0 0 5px;
+}
+
+.deposit-history-item p {
+    margin: 0 0 5px;
+}
+
+.deposit-history-item span {
+    font-size: 13px;
+    color: #94a3b8;
+}
