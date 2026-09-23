@@ -54,10 +54,11 @@
 
     </section>
 
-
     <!-- Main Cards -->
 
     <section class="dashboard-grid">
+
+        <!-- Wallet -->
 
         <div class="dashboard-card wallet-card">
 
@@ -67,8 +68,30 @@
 
             <span>Your available travel money</span>
 
+            <div class="wallet-actions">
+
+                <button id="payFromWalletBtn">
+                    Pay from Wallet
+                </button>
+
+                <button id="walletHistoryBtn">
+                    Wallet History
+                </button>
+
+            </div>
+
+            <!-- Wallet History -->
+
+            <div id="walletHistory" style="display: none;">
+
+                <p>Loading wallet history...</p>
+
+            </div>
+
         </div>
 
+
+        <!-- My Trips -->
 
         <div
                 class="dashboard-card my-trips-card"
@@ -80,28 +103,6 @@
             <h2>✈️</h2>
 
             <span>View and manage your trips</span>
-
-        </div>
-
-
-        <div class="dashboard-card">
-
-            <p>Total Spent from Wallet</p>
-
-            <h2 id="totalSpent">₹0.00</h2>
-
-            <span>Your travel expenses</span>
-
-        </div>
-
-
-        <div class="dashboard-card">
-
-            <p>Remaining Budget</p>
-
-            <h2 id="remainingBudget">₹0.00</h2>
-
-            <span>Budget still available</span>
 
         </div>
 

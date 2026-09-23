@@ -24,15 +24,6 @@ async function loadDashboard() {
         document.getElementById("walletBalance").textContent =
             `₹${data.walletBalance.toFixed(2)}`;
 
-       /* document.getElementById("totalBudget").textContent =
-            `₹${data.totalBudget.toFixed(2)}`;*/      //ei matro delete korlam ....
-
-        document.getElementById("totalSpent").textContent =
-            `₹${data.totalSpent.toFixed(2)}`;
-
-        document.getElementById("remainingBudget").textContent =
-            `₹${data.remainingBudget.toFixed(2)}`;
-
         document.getElementById("totalDeposits").textContent =
             `₹${data.totalDeposits.toFixed(2)}`;
 
