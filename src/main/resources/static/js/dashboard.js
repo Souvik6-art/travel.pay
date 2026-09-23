@@ -246,3 +246,28 @@ if (totalDepositsCard) {
 
     });
 }
+
+/*******************************************************/
+const walletCard =
+    document.getElementById("walletCard");
+
+const walletOptions =
+    document.getElementById("walletOptions");
+
+if (walletCard) {
+
+    walletCard.addEventListener("click", function () {
+
+        if (walletOptions.style.display === "none") {
+
+            walletOptions.style.display = "block";
+
+        } else {
+
+            walletOptions.style.display = "none";
+
+        }
+
+    });
+
+}

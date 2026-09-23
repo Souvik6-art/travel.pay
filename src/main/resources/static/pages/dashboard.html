@@ -60,7 +60,7 @@
 
         <!-- Wallet -->
 
-        <div class="dashboard-card wallet-card">
+        <div class="dashboard-card wallet-card" id="walletCard">
 
             <p>Wallet Balance</p>
 
@@ -68,7 +68,9 @@
 
             <span>Your available travel money</span>
 
-            <div class="wallet-actions">
+            <!-- Wallet options -->
+
+            <div id="walletOptions" style="display: none;">
 
                 <button id="payFromWalletBtn">
                     Pay from Wallet
@@ -79,6 +81,9 @@
                 </button>
 
             </div>
+
+        </div>
+
 
             <!-- Wallet History -->
 
@@ -113,6 +118,7 @@
 
     <section class="cash-flow-grid">
 
+        <!-- Total Deposits -->
 
         <div class="cash-card" id="totalDepositsCard">
 
@@ -124,17 +130,14 @@
 
                 <p>Total Deposits</p>
 
-                <h3 id="totalDeposits">₹0.00</h3>
+                <h3 id="totalDeposits" style="color: white !important;">₹0.00</h3>
 
                 <span id="depositHistoryToggle">
-            Click to view deposit history
-        </span>
+                Click to view deposit history
+            </span>
 
-                <!-- Deposit history will appear here -->
                 <div id="depositHistory" style="display: none;">
-
                     <p>Loading deposit history...</p>
-
                 </div>
 
             </div>
@@ -142,20 +145,25 @@
         </div>
 
 
-        <div class="cash-card">
+        <!-- Total Expenses -->
+
+        <div class="cash-card" id="totalExpensesCard">
 
             <div class="cash-icon">
                 ↑
             </div>
 
+            <div class="deposit-content">
 
-            <div class="dashboard-card" id="totalExpensesCard">
                 <p>Total Expenses</p>
-                <h2 id="totalExpenses">₹0.00</h2>
-                <span>Click to view trip-wise expenses</span>
+
+                <h3 id="totalExpenses" style="color: white !important;">₹0.00</h3>
+
+                <span>
+                Click to view trip-wise expenses
+            </span>
+
             </div>
-
-
 
         </div>
 
