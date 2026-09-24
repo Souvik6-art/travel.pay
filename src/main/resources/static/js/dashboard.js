@@ -254,19 +254,31 @@ const walletCard =
 const walletOptions =
     document.getElementById("walletOptions");
 
+const payFromWalletBtn =
+    document.getElementById("payFromWalletBtn");
+
+const walletPaymentForm =
+    document.getElementById("walletPaymentForm");
+
+
 if (walletCard) {
 
     walletCard.addEventListener("click", function () {
 
-        if (walletOptions.style.display === "none") {
+        walletOptions.style.display = "block";
 
-            walletOptions.style.display = "block";
+    });
 
-        } else {
+}
 
-            walletOptions.style.display = "none";
 
-        }
+if (payFromWalletBtn) {
+
+    payFromWalletBtn.addEventListener("click", function (event) {
+
+        event.stopPropagation();
+
+        walletPaymentForm.style.display = "block";
 
     });
 
