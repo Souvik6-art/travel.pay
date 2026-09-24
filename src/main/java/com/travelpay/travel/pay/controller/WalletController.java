@@ -97,7 +97,58 @@ public class WalletController {
 
 
     }
-  //*************************************////
+
+
+    //**********************************************/
+
+    // Pay money from wallet
+    @PostMapping("/{walletId}/pay")
+    public Wallet payFromWallet(
+            @PathVariable Long walletId,
+            @RequestBody DepositRequest request) {
+
+        Wallet wallet = walletRepository.findById(walletId)
+                .orElseThrow(() ->
+                        new RuntimeException("Wallet not found"));
+
+        double amount = request.getAmount();
+
+        if (amount <= 0) {
+            throw new RuntimeException(
+                    "Payment amount must be greater than zero");
+        }
+
+        if (amount > wallet.getBalance()) {
+            throw new RuntimeException(
+                    "Insufficient wallet balance");
+        }
+
+        // Deduct money from wallet
+        wallet.setBalance(
+                wallet.getBalance() - amount
+        );
+
+        walletRepository.save(wallet);
+
+        // Create wallet payment transaction
+        Transaction transaction = new Transaction();
+
+        transaction.setType("EXPENSE");
+        transaction.setAmount(amount);
+        transaction.setDescription(
+                request.getDescription()
+        );
+        transaction.setTransactionDate(
+                java.time.LocalDateTime.now()
+        );
+        transaction.setUser(wallet.getUser());
+
+        transactionRepository.save(transaction);
+
+        return wallet;
+    }
+
+    //*************************************////
 
     @GetMapping("/{walletId}")
     public Wallet getWallet(@PathVariable Long walletId) {
