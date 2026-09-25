@@ -262,7 +262,125 @@ const walletPaymentForm =
 
 const confirmWalletPaymentBtn =
     document.getElementById("confirmWalletPaymentBtn");
+//****************************************/
+if (confirmWalletPaymentBtn) {
 
+    confirmWalletPaymentBtn.addEventListener(
+        "click",
+        async function (event) {
+
+            event.stopPropagation();
+
+            const amount =
+                Number(
+                    document.getElementById(
+                        "walletPaymentAmount"
+                    ).value
+                );
+
+            const description =
+                document.getElementById(
+                    "walletPaymentDescription"
+                ).value;
+
+            const message =
+                document.getElementById(
+                    "walletPaymentMessage"
+                );
+
+            // Check amount
+            if (amount <= 0) {
+
+                message.textContent =
+                    "Please enter a valid amount.";
+
+                return;
+            }
+
+            try {
+
+                // Get user's wallet
+                const walletResponse =
+                    await fetch(
+                        `/api/wallets/user/${userId}`
+                    );
+
+                if (!walletResponse.ok) {
+                    throw new Error(
+                        "Wallet not found"
+                    );
+                }
+
+                const wallet =
+                    await walletResponse.json();
+
+                // Pay from wallet
+                const response =
+                    await fetch(
+                        `/api/wallets/${wallet.id}/pay`,
+                        {
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json"
+                            },
+
+                            body: JSON.stringify({
+                                amount: amount,
+                                description: description
+                            })
+                        }
+                    );
+
+                if (!response.ok) {
+
+                    const errorText =
+                        await response.text();
+
+                    throw new Error(errorText);
+                }
+
+                const updatedWallet =
+                    await response.json();
+
+                // Update wallet balance
+                document.getElementById(
+                    "walletBalance"
+                ).textContent =
+                    `₹${updatedWallet.balance.toFixed(2)}`;
+
+                // Show success
+                message.textContent =
+                    "Payment successful!";
+
+                // Clear inputs
+                document.getElementById(
+                    "walletPaymentAmount"
+                ).value = "";
+
+                document.getElementById(
+                    "walletPaymentDescription"
+                ).value = "";
+
+                // Refresh dashboard
+                loadDashboard();
+
+            } catch (error) {
+
+                console.error(
+                    "Wallet payment error:",
+                    error
+                );
+
+                message.textContent =
+                    error.message ||
+                    "Payment failed.";
+            }
+        }
+    );
+}
+/*********************************************/
 if (walletCard) {
 
     walletCard.addEventListener("click", function () {
