@@ -260,6 +260,8 @@ const payFromWalletBtn =
 const walletPaymentForm =
     document.getElementById("walletPaymentForm");
 
+const confirmWalletPaymentBtn =
+    document.getElementById("confirmWalletPaymentBtn");
 
 if (walletCard) {
 
