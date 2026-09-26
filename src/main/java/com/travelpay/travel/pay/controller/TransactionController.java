@@ -46,6 +46,14 @@ public class TransactionController {
         return transactionRepository.findByUserId(userId);
     }
 
+    @GetMapping("/user/{userId}/wallet")
+    public List<Transaction> getWalletTransactions(
+            @PathVariable Long userId) {
+
+        return transactionRepository
+                .findByUserIdAndExpenseIsNull(userId);
+    }
+
     @GetMapping("/user/{userId}/trip/{tripId}")
     public List<Transaction> getTripTransactions(
             @PathVariable Long userId,
