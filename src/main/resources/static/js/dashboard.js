@@ -246,8 +246,10 @@ if (totalDepositsCard) {
 
     });
 }
+/*******************************************************
+ * WALLET
+ *******************************************************/
 
-/*******************************************************/
 const walletCard =
     document.getElementById("walletCard");
 
@@ -262,7 +264,53 @@ const walletPaymentForm =
 
 const confirmWalletPaymentBtn =
     document.getElementById("confirmWalletPaymentBtn");
-//****************************************/
+
+const walletHistoryBtn =
+    document.getElementById("walletHistoryBtn");
+
+const walletHistory =
+    document.getElementById("walletHistory");
+
+
+/*******************************************************
+ * OPEN WALLET OPTIONS
+ *******************************************************/
+
+if (walletCard) {
+
+    walletCard.addEventListener("click", function () {
+
+        walletOptions.style.display = "block";
+
+    });
+
+}
+
+
+/*******************************************************
+ * OPEN PAY FROM WALLET FORM
+ *******************************************************/
+
+if (payFromWalletBtn) {
+
+    payFromWalletBtn.addEventListener(
+        "click",
+        function (event) {
+
+            event.stopPropagation();
+
+            walletPaymentForm.style.display = "block";
+
+        }
+    );
+
+}
+
+
+/*******************************************************
+ * PAY FROM WALLET
+ *******************************************************/
+
 if (confirmWalletPaymentBtn) {
 
     confirmWalletPaymentBtn.addEventListener(
@@ -288,7 +336,9 @@ if (confirmWalletPaymentBtn) {
                     "walletPaymentMessage"
                 );
 
+
             // Check amount
+
             if (amount <= 0) {
 
                 message.textContent =
@@ -297,24 +347,36 @@ if (confirmWalletPaymentBtn) {
                 return;
             }
 
+
             try {
 
-                // Get user's wallet
+                message.textContent =
+                    "Processing payment...";
+
+
+                // Get wallet
+
                 const walletResponse =
                     await fetch(
                         `/api/wallets/user/${userId}`
                     );
 
+
                 if (!walletResponse.ok) {
+
                     throw new Error(
                         "Wallet not found"
                     );
+
                 }
+
 
                 const wallet =
                     await walletResponse.json();
 
+
                 // Pay from wallet
+
                 const response =
                     await fetch(
                         `/api/wallets/${wallet.id}/pay`,
@@ -333,28 +395,38 @@ if (confirmWalletPaymentBtn) {
                         }
                     );
 
+
                 if (!response.ok) {
 
                     const errorText =
                         await response.text();
 
-                    throw new Error(errorText);
+                    throw new Error(
+                        errorText ||
+                        "Payment failed"
+                    );
+
                 }
+
 
                 const updatedWallet =
                     await response.json();
 
-                // Update wallet balance
+
+                // Update balance
+
                 document.getElementById(
                     "walletBalance"
                 ).textContent =
                     `₹${updatedWallet.balance.toFixed(2)}`;
 
-                // Show success
+
                 message.textContent =
                     "Payment successful!";
 
+
                 // Clear inputs
+
                 document.getElementById(
                     "walletPaymentAmount"
                 ).value = "";
@@ -363,10 +435,13 @@ if (confirmWalletPaymentBtn) {
                     "walletPaymentDescription"
                 ).value = "";
 
+
                 // Refresh dashboard
+
                 loadDashboard();
 
-            } catch (error) {
+            }
+            catch (error) {
 
                 console.error(
                     "Wallet payment error:",
@@ -376,30 +451,221 @@ if (confirmWalletPaymentBtn) {
                 message.textContent =
                     error.message ||
                     "Payment failed.";
+
             }
+
         }
     );
-}
-/*********************************************/
-if (walletCard) {
-
-    walletCard.addEventListener("click", function () {
-
-        walletOptions.style.display = "block";
-
-    });
 
 }
 
 
-if (payFromWalletBtn) {
+/*******************************************************
+ * WALLET HISTORY
+ *******************************************************/
 
-    payFromWalletBtn.addEventListener("click", function (event) {
+if (walletHistoryBtn) {
 
-        event.stopPropagation();
+    walletHistoryBtn.addEventListener(
+        "click",
+        async function (event) {
 
-        walletPaymentForm.style.display = "block";
+            event.stopPropagation();
 
-    });
+
+            // Show history
+
+            walletHistory.style.display = "block";
+
+
+            walletHistory.innerHTML =
+                "<p>Loading wallet history...</p>";
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        `/api/transactions/user/${userId}`
+                    );
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        "Failed to load wallet history"
+                    );
+
+                }
+
+
+                const transactions =
+                    await response.json();
+
+
+                console.log(
+                    "Wallet transactions:",
+                    transactions
+                );
+
+
+                /*
+                 * Only wallet transactions
+                 *
+                 * DEPOSIT  = money added
+                 * EXPENSE  = money paid
+                 */
+
+                const walletTransactions =
+                    transactions
+                        .filter(function (transaction) {
+
+                            const type =
+                                String(
+                                    transaction.type || ""
+                                ).toUpperCase();
+
+                            return (
+                                type === "DEPOSIT" ||
+                                type === "EXPENSE"
+                            );
+
+                        })
+                        .sort(function (a, b) {
+
+                            return (
+                                new Date(
+                                    b.transactionDate
+                                ) -
+                                new Date(
+                                    a.transactionDate
+                                )
+                            );
+
+                        });
+
+
+                // No history
+
+                if (
+                    walletTransactions.length === 0
+                ) {
+
+                    walletHistory.innerHTML =
+                        "<p>No wallet history yet.</p>";
+
+                    return;
+
+                }
+
+
+                // Clear loading message
+
+                walletHistory.innerHTML = "";
+
+
+                // Display transactions
+
+                walletTransactions.forEach(
+                    function (transaction) {
+
+                        const type =
+                            String(
+                                transaction.type || ""
+                            ).toUpperCase();
+
+
+                        const isDeposit =
+                            type === "DEPOSIT";
+
+
+                        const symbol =
+                            isDeposit
+                                ? "↓"
+                                : "↑";
+
+
+                        const amount =
+                            Number(
+                                transaction.amount
+                            ) || 0;
+
+
+                        const description =
+                            transaction.description ||
+                            (
+                                isDeposit
+                                    ? "Money added to wallet"
+                                    : "Wallet payment"
+                            );
+
+
+                        const date =
+                            transaction.transactionDate
+                                ? new Date(
+                                    transaction.transactionDate
+                                ).toLocaleString(
+                                    "en-IN",
+                                    {
+                                        dateStyle: "medium",
+                                        timeStyle: "short"
+                                    }
+                                )
+                                : "Date unavailable";
+
+
+                        const item =
+                            document.createElement("div");
+
+
+                        item.className =
+                            "wallet-history-item";
+
+
+                        item.innerHTML = `
+
+                            <div>
+
+                                <strong>
+                                    ${symbol}
+                                    ₹${amount.toFixed(2)}
+                                </strong>
+
+                                <p>
+                                    ${description}
+                                </p>
+
+                                <small>
+                                    ${date}
+                                </small>
+
+                            </div>
+
+                            <hr>
+
+                        `;
+
+
+                        walletHistory.appendChild(item);
+
+                    }
+                );
+
+            }
+            catch (error) {
+
+                console.error(
+                    "Wallet history error:",
+                    error
+                );
+
+
+                walletHistory.innerHTML =
+                    "<p>Unable to load wallet history.</p>";
+
+            }
+
+        }
+    );
 
 }

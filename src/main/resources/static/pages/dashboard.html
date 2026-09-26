@@ -60,6 +60,8 @@
 
         <!-- Wallet -->
 
+        <!-- Wallet -->
+
         <div class="dashboard-card wallet-card" id="walletCard">
 
             <p>Wallet Balance</p>
@@ -68,19 +70,34 @@
 
             <span>Your available travel money</span>
 
-            <!-- Wallet options -->
+
+            <!-- Wallet Options -->
 
             <div id="walletOptions" style="display: none;">
 
-                <button id="payFromWalletBtn">
+                <!-- Wallet Buttons -->
+
+                <button
+                        id="payFromWalletBtn"
+                        type="button"
+                >
                     Pay from Wallet
                 </button>
 
-                <button id="walletHistoryBtn">
+                <button
+                        id="walletHistoryBtn"
+                        type="button"
+                >
                     Wallet History
                 </button>
 
-                <div id="walletPaymentForm" style="display: none;">
+
+                <!-- Pay From Wallet Form -->
+
+                <div
+                        id="walletPaymentForm"
+                        style="display: none;"
+                >
 
                     <h3>Pay from Wallet</h3>
 
@@ -96,6 +113,7 @@
                             step="0.01"
                     >
 
+
                     <label for="walletPaymentDescription">
                         Description
                     </label>
@@ -106,7 +124,11 @@
                             placeholder="e.g. Hotel payment"
                     >
 
-                    <button id="confirmWalletPaymentBtn">
+
+                    <button
+                            id="confirmWalletPaymentBtn"
+                            type="button"
+                    >
                         Pay Now
                     </button>
 
@@ -114,18 +136,21 @@
 
                 </div>
 
+
+                <!-- Wallet History -->
+
+                <div
+                        id="walletHistory"
+                        style="display: none;"
+                >
+
+                    <p>Loading wallet history...</p>
+
+                </div>
+
             </div>
 
         </div>
-
-
-            <!-- Wallet History -->
-
-            <div id="walletHistory" style="display: none;">
-
-                <p>Loading wallet history...</p>
-
-            </div>
 
 
 
