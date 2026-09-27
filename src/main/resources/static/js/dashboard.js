@@ -484,10 +484,10 @@ if (walletHistoryBtn) {
 
             try {
 
-                const response =
-                    await fetch(
-                        `/api/transactions/user/${userId}`
-                    );
+              const response =
+                  await fetch(
+                      `/api/transactions/user/${userId}/wallet`
+                  );
 
 
                 if (!response.ok) {
@@ -622,26 +622,31 @@ if (walletHistoryBtn) {
                             "wallet-history-item";
 
 
+                        const transactionClass =
+                            isDeposit ? "deposit" : "expense";
+
+
                         item.innerHTML = `
 
-                            <div>
+                            <div class="wallet-history-icon ${transactionClass}">
+                                ${symbol}
+                            </div>
 
-                                <strong>
-                                    ${symbol}
-                                    ₹${amount.toFixed(2)}
-                                </strong>
+                            <div class="wallet-history-details">
 
-                                <p>
+                                <p class="wallet-history-amount ${transactionClass}">
+                                    ${isDeposit ? "+" : "-"}₹${amount.toFixed(2)}
+                                </p>
+
+                                <p class="wallet-history-description">
                                     ${description}
                                 </p>
 
-                                <small>
+                                <span class="wallet-history-date">
                                     ${date}
-                                </small>
+                                </span>
 
                             </div>
-
-                            <hr>
 
                         `;
 
