@@ -21,11 +21,8 @@
 
     <nav>
         <a href="dashboard.html">Dashboard</a>
-        <a href="expenses.html">Expenses</a>
-        <a href="transactions.html">Transactions</a>
-        <a href="budget.html">Budget</a>
-        <a href="reports.html">Reports</a>
-        <a href="currency.html">Currency</a>
+        <a href="#tripsOverviewSection">Trips Overview</a>
+        <a href="#photoGallerySection">Gallery</a>
     </nav>
 
     <div class="nav-buttons">
@@ -222,6 +219,128 @@
             </span>
 
             </div>
+
+        </div>
+
+    </section>
+
+    <!-- =========================================
+     TRIPS OVERVIEW
+     ========================================= -->
+
+    <section
+            class="trips-overview-section"
+            id="tripsOverviewSection"
+    >
+
+        <div class="section-heading">
+
+            <div>
+                <p class="hero-tag">YOUR JOURNEYS</p>
+
+                <h2>Trips Overview</h2>
+
+                <p>
+                    Keep track of your recent and upcoming trips.
+                </p>
+            </div>
+
+            <button
+                    id="viewAllTripsBtn"
+                    type="button"
+                    class="section-action-btn"
+            >
+                View All Trips
+            </button>
+
+        </div>
+
+
+        <div
+                id="tripsOverview"
+                class="trips-overview-grid"
+        >
+
+            <p class="loading-text">
+                Loading trips...
+            </p>
+
+        </div>
+
+    </section>
+
+    <!-- =========================================
+     PHOTO GALLERY
+     ========================================= -->
+
+    <section
+            class="photo-gallery-section"
+            id="photoGallerySection"
+    >
+
+        <div class="section-heading">
+
+            <div>
+                <p class="hero-tag">YOUR MEMORIES</p>
+
+                <h2>Your Photo Gallery</h2>
+
+                <p>
+                    View and save memories from your trips.
+                </p>
+            </div>
+
+            <button
+                    id="uploadPhotoBtn"
+                    type="button"
+                    class="section-action-btn"
+            >
+                + Upload Photos
+            </button>
+
+        </div>
+
+
+        <!-- Trip selector -->
+
+        <div class="gallery-controls">
+
+            <label for="galleryTripSelect">
+                Select Trip
+            </label>
+
+            <select id="galleryTripSelect">
+
+                <option value="all">
+                    All Trips
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- Hidden file input -->
+
+        <input
+                type="file"
+                id="photoUploadInput"
+                accept="image/*"
+                multiple
+                hidden
+        >
+
+
+        <!-- Gallery -->
+
+        <div
+                id="photoGallery"
+                class="photo-gallery-grid"
+        >
+
+            <p class="loading-text">
+                Loading photos...
+            </p>
 
         </div>
 
