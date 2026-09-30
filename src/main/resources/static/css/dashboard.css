@@ -617,57 +617,98 @@
     color: rgba(255, 255, 255, 0.55);
 }
 
-
 /* =========================================
    WALLET OPTIONS
    ========================================= */
 
 #walletOptions {
+    width: 100%;
     margin-top: 20px;
 }
 
 
-/* Wallet option buttons */
+/* -----------------------------------------
+   Wallet option buttons
+   ----------------------------------------- */
 
-#payFromWalletBtn,
-#walletHistoryBtn {
+#walletOptions #payFromWalletBtn,
+#walletOptions #walletHistoryBtn {
+
+    display: block;
+
     width: 100%;
-    padding: 14px 18px;
-    margin-bottom: 12px;
+    height: 50px;
 
-    border: 1px solid rgba(53, 208, 186, 0.25);
+    margin: 0 0 12px 0;
+    padding: 0 18px;
+
+    box-sizing: border-box;
+
+    border: 1px solid rgba(53, 208, 186, 0.35);
     border-radius: 12px;
 
     background: rgba(53, 208, 186, 0.08);
+
     color: #ffffff;
 
+    font-family: inherit;
     font-size: 15px;
     font-weight: 600;
 
+    text-align: center;
+
     cursor: pointer;
 
-    transition: all 0.25s ease;
+    transition:
+        background 0.25s ease,
+        border-color 0.25s ease,
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
 }
 
 
-/* Hover */
+/* -----------------------------------------
+   Hover
+   ----------------------------------------- */
 
-#payFromWalletBtn:hover,
-#walletHistoryBtn:hover {
-    background: rgba(53, 208, 186, 0.16);
+#walletOptions #payFromWalletBtn:hover,
+#walletOptions #walletHistoryBtn:hover {
 
-    border-color: rgba(53, 208, 186, 0.55);
+    background: rgba(53, 208, 186, 0.18);
+
+    border-color: #35d0ba;
 
     transform: translateY(-2px);
 
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.20);
+    box-shadow:
+        0 8px 20px rgba(0, 0, 0, 0.25);
 }
 
 
-/* Click */
+/* -----------------------------------------
+   Click / active
+   ----------------------------------------- */
 
-#payFromWalletBtn:active,
-#walletHistoryBtn:active {
+#walletOptions #payFromWalletBtn:active,
+#walletOptions #walletHistoryBtn:active {
+
     transform: translateY(0);
+
     box-shadow: none;
+}
+
+
+/* -----------------------------------------
+   Keyboard focus
+   ----------------------------------------- */
+
+#walletOptions #payFromWalletBtn:focus-visible,
+#walletOptions #walletHistoryBtn:focus-visible {
+
+    outline: none;
+
+    border-color: #35d0ba;
+
+    box-shadow:
+        0 0 0 3px rgba(53, 208, 186, 0.18);
 }
