@@ -674,3 +674,130 @@ if (walletHistoryBtn) {
     );
 
 }
+
+
+/* =========================================
+   LOAD TRIPS OVERVIEW
+   ========================================= */
+
+async function loadTripsOverview() {
+
+    const tripsContainer = document.getElementById("tripsOverview");
+
+    const viewAllTripsBtn = document.getElementById("viewAllTripsBtn");
+
+    const userId = localStorage.getItem("userId");
+
+    if (!tripsContainer || !userId) {
+        return;
+    }
+
+    try {
+
+        const response = await fetch(`/api/trips/user/${userId}`);
+
+        if (!response.ok) {
+            throw new Error("Unable to load trips");
+        }
+
+        const trips = await response.json();
+
+        tripsContainer.innerHTML = "";
+
+        if (trips.length === 0) {
+
+            tripsContainer.innerHTML = `
+                <p class="loading-text">
+                    You haven't created any trips yet.
+                </p>
+            `;
+
+            return;
+        }
+
+        // Display the latest trips first
+        trips.reverse();
+
+        trips.slice(0, 3).forEach(trip => {
+
+            const tripCard = document.createElement("div");
+
+            tripCard.className = "trip-overview-card";
+
+            const startDate = new Date(trip.startDate + "T00:00:00")
+                .toLocaleDateString("en-IN", {
+                    day: "numeric",
+                    month: "short",
+                    year: "numeric"
+                });
+
+            const endDate = new Date(trip.endDate + "T00:00:00")
+                .toLocaleDateString("en-IN", {
+                    day: "numeric",
+                    month: "short",
+                    year: "numeric"
+                });
+
+            tripCard.innerHTML = `
+                <div class="trip-card-top">
+
+                    <span class="trip-status">
+                        ${trip.status}
+                    </span>
+
+                    <span class="trip-icon">✈️</span>
+
+                </div>
+
+                <h3>${escapeTripText(trip.tripName)}</h3>
+
+                <p class="trip-destination">
+                    📍 ${escapeTripText(trip.destination)}
+                </p>
+
+                <div class="trip-date">
+                    ${startDate} – ${endDate}
+                </div>
+            `;
+
+            tripsContainer.appendChild(tripCard);
+
+        });
+
+    } catch (error) {
+
+        console.error("Trips loading error:", error);
+
+        tripsContainer.innerHTML = `
+            <p class="loading-text">
+                Unable to load your trips. Please try again.
+            </p>
+        `;
+
+    }
+
+}
+
+
+// Safely display user-entered trip text
+function escapeTripText(value) {
+
+    const element = document.createElement("span");
+
+    element.textContent = value || "";
+
+    return element.innerHTML;
+}
+
+
+// View All Trips button
+document.getElementById("viewAllTripsBtn")
+    ?.addEventListener("click", function () {
+
+        window.location.href = "trips.html";
+
+    });
+
+
+// Load trips when dashboard opens
+loadTripsOverview();

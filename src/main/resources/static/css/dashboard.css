@@ -992,3 +992,60 @@
 .photo-gallery-grid .loading-text {
     grid-column: 1 / -1;
 }
+
+
+/* =========================================
+   TRIP OVERVIEW CARDS
+   ========================================= */
+
+.trip-overview-card {
+    padding: 22px;
+    background: #0d1b2a;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    transition: 0.3s ease;
+}
+
+.trip-overview-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(53, 208, 186, 0.4);
+}
+
+.trip-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.trip-status {
+    padding: 6px 12px;
+    border-radius: 20px;
+    background: rgba(53, 208, 186, 0.12);
+    color: #35d0ba;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.trip-icon {
+    font-size: 25px;
+}
+
+.trip-overview-card h3 {
+    color: #ffffff;
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.trip-destination {
+    color: #9aa8b8;
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+.trip-date {
+    padding-top: 14px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    color: #718096;
+    font-size: 13px;
+}
