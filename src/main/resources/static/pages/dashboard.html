@@ -306,9 +306,10 @@
 
     </section>
 
+
     <!-- =========================================
-     PHOTO GALLERY
-     ========================================= -->
+         PHOTO GALLERY
+         ========================================= -->
 
     <section
             class="photo-gallery-section"
@@ -338,7 +339,7 @@
         </div>
 
 
-        <!-- Trip selector -->
+        <!-- Trip Selector -->
 
         <div class="gallery-controls">
 
@@ -348,8 +349,8 @@
 
             <select id="galleryTripSelect">
 
-                <option value="all">
-                    All Trips
+                <option value="">
+                    -- Select a Trip --
                 </option>
 
             </select>
@@ -357,7 +358,7 @@
         </div>
 
 
-        <!-- Hidden file input -->
+        <!-- Hidden Photo Input -->
 
         <input
                 type="file"
@@ -368,7 +369,15 @@
         >
 
 
-        <!-- Gallery -->
+        <!-- Upload Message -->
+
+        <p
+                id="photoUploadMessage"
+                class="loading-text"
+        ></p>
+
+
+        <!-- Photo Gallery -->
 
         <div
                 id="photoGallery"
@@ -376,7 +385,7 @@
         >
 
             <p class="loading-text">
-                Loading photos...
+                Select a trip to view its photos.
             </p>
 
         </div>
