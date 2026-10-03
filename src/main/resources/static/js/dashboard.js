@@ -801,3 +801,99 @@ document.getElementById("viewAllTripsBtn")
 
 // Load trips when dashboard opens
 loadTripsOverview();
+
+
+/* =========================================
+   PHOTO GALLERY - TRIP SELECTION
+   ========================================= */
+
+const galleryTripSelect = document.getElementById("galleryTripSelect");
+const uploadPhotoBtn = document.getElementById("uploadPhotoBtn");
+const photoUploadInput = document.getElementById("photoUploadInput");
+const photoUploadMessage = document.getElementById("photoUploadMessage");
+
+
+// Load the user's trips into the dropdown
+async function loadGalleryTrips() {
+
+    const userId = localStorage.getItem("userId");
+
+    if (!userId || !galleryTripSelect) {
+        return;
+    }
+
+    try {
+
+        const response = await fetch(`/api/trips/user/${userId}`);
+
+        if (!response.ok) {
+            throw new Error("Could not load trips");
+        }
+
+        const trips = await response.json();
+
+        galleryTripSelect.innerHTML =
+            '<option value="">-- Select a Trip --</option>';
+
+        trips.forEach(trip => {
+
+            const option = document.createElement("option");
+
+            option.value = trip.id;
+            option.textContent = trip.tripName + " - " + trip.destination;
+
+            galleryTripSelect.appendChild(option);
+
+        });
+
+    } catch (error) {
+
+        console.error("Gallery trips error:", error);
+
+        photoUploadMessage.textContent =
+            "Unable to load trips. Please refresh the page.";
+
+    }
+}
+
+
+// Upload button behaviour
+uploadPhotoBtn.addEventListener("click", function () {
+
+    const selectedTripId = galleryTripSelect.value;
+
+    if (!selectedTripId) {
+
+        alert("Please select your trip first.");
+
+        galleryTripSelect.focus();
+
+        return;
+    }
+
+    // A trip is selected, so open the file picker
+    photoUploadInput.click();
+
+});
+
+
+// Handle selected photos
+photoUploadInput.addEventListener("change", function () {
+
+    const selectedFiles = this.files;
+
+    if (!selectedFiles || selectedFiles.length === 0) {
+        return;
+    }
+
+    photoUploadMessage.textContent =
+        selectedFiles.length + " photo(s) selected for your trip.";
+
+    console.log("Selected Trip ID:", galleryTripSelect.value);
+    console.log("Selected Photos:", selectedFiles);
+
+});
+
+
+// Load trips when the dashboard opens
+loadGalleryTrips();
