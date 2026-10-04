@@ -814,44 +814,85 @@ const photoUploadMessage = document.getElementById("photoUploadMessage");
 
 
 // Load the user's trips into the dropdown
+/* =========================================
+   LOAD TRIPS FOR PHOTO GALLERY
+   ========================================= */
+
 async function loadGalleryTrips() {
 
-    const userId = localStorage.getItem("userId");
+    const galleryTripSelect =
+        document.getElementById("galleryTripSelect");
 
-    if (!userId || !galleryTripSelect) {
+    const photoUploadMessage =
+        document.getElementById("photoUploadMessage");
+
+    const userId =
+        localStorage.getItem("userId");
+
+    if (!galleryTripSelect || !userId) {
+        console.log("Gallery: user ID or dropdown not found.");
         return;
     }
 
     try {
 
-        const response = await fetch(`/api/trips/user/${userId}`);
+        console.log("Loading gallery trips for user:", userId);
+
+        const response =
+            await fetch(`/api/trips/user/${userId}`);
 
         if (!response.ok) {
-            throw new Error("Could not load trips");
+            throw new Error(
+                "Failed to load trips. Status: " + response.status
+            );
         }
 
         const trips = await response.json();
 
-        galleryTripSelect.innerHTML =
-            '<option value="">-- Select a Trip --</option>';
+        console.log("Gallery trips received:", trips);
 
+        // Keep only the default option
+        galleryTripSelect.innerHTML = `
+            <option value="">
+                -- Select a Trip --
+            </option>
+        `;
+
+        // Add every trip to the dropdown
         trips.forEach(trip => {
 
-            const option = document.createElement("option");
+            const option =
+                document.createElement("option");
 
             option.value = trip.id;
-            option.textContent = trip.tripName + " - " + trip.destination;
+
+            option.textContent =
+                `${trip.tripName} - ${trip.destination}`;
 
             galleryTripSelect.appendChild(option);
 
         });
 
+        if (trips.length === 0) {
+
+            photoUploadMessage.textContent =
+                "You don't have any trips yet.";
+
+        } else {
+
+            photoUploadMessage.textContent = "";
+
+        }
+
     } catch (error) {
 
-        console.error("Gallery trips error:", error);
+        console.error(
+            "Gallery trips loading error:",
+            error
+        );
 
         photoUploadMessage.textContent =
-            "Unable to load trips. Please refresh the page.";
+            "Unable to load your trips.";
 
     }
 }
