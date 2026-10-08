@@ -918,22 +918,94 @@ uploadPhotoBtn.addEventListener("click", function () {
 });
 
 
-// Handle selected photos
-photoUploadInput.addEventListener("change", function () {
+/// Handle selected photos and upload them
+ photoUploadInput.addEventListener(
+     "change",
+     async function () {
 
-    const selectedFiles = this.files;
+         const selectedFiles = this.files;
 
-    if (!selectedFiles || selectedFiles.length === 0) {
-        return;
-    }
+         if (!selectedFiles || selectedFiles.length === 0) {
+             return;
+         }
 
-    photoUploadMessage.textContent =
-        selectedFiles.length + " photo(s) selected for your trip.";
+         const selectedTripId =
+             galleryTripSelect.value;
 
-    console.log("Selected Trip ID:", galleryTripSelect.value);
-    console.log("Selected Photos:", selectedFiles);
+         if (!selectedTripId) {
 
-});
+             alert("Please select your trip first.");
+
+             return;
+         }
+
+         photoUploadMessage.textContent =
+             "Uploading photos...";
+
+         let uploadedCount = 0;
+
+         for (const file of selectedFiles) {
+
+             const formData =
+                 new FormData();
+
+             formData.append("file", file);
+
+             try {
+
+                 const response =
+                     await fetch(
+                         `/api/trip-photos/upload/${selectedTripId}`,
+                         {
+                             method: "POST",
+                             body: formData
+                         }
+                     );
+
+                 if (!response.ok) {
+
+                     throw new Error(
+                         "Upload failed: " +
+                         response.status
+                     );
+
+                 }
+
+                 uploadedCount++;
+
+                 console.log(
+                     "Uploaded:",
+                     file.name
+                 );
+
+             } catch (error) {
+
+                 console.error(
+                     "Photo upload error:",
+                     error
+                 );
+
+                 alert(
+                     "Failed to upload " +
+                     file.name
+                 );
+
+             }
+
+         }
+
+         if (uploadedCount > 0) {
+
+             photoUploadMessage.textContent =
+                 `${uploadedCount} photo(s) uploaded successfully!`;
+
+         }
+
+         // Clear the file input
+         photoUploadInput.value = "";
+
+     }
+ );
 
 
 // Load trips when the dashboard opens

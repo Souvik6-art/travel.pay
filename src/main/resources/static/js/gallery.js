@@ -69,88 +69,14 @@ async function loadGalleryPageTrips() {
 loadGalleryPageTrips();
 
 
-
+/*
 const galleryPagePhotoInput =
     document.getElementById("galleryPagePhotoInput");
-/*
-if (galleryPagePhotoInput) {
-
-    galleryPagePhotoInput.addEventListener(
-        "change",
-        async function () {
-
-            const tripId =
-                galleryPageTripSelect.value;
-
-            if (!tripId) {
-
-                alert("Please select a trip first.");
-
-                return;
-            }
-
-            const files =
-                galleryPagePhotoInput.files;
-
-            if (!files.length) {
-                return;
-            }
-
-            for (const file of files) {
-
-                const formData =
-                    new FormData();
-
-                formData.append("file", file);
-
-                try {
-
-                    const response =
-                        await fetch(
-                            `/api/trip-photos/upload/${tripId}`,
-                            {
-                                method: "POST",
-                                body: formData
-                            }
-                        );
-
-                    if (!response.ok) {
-
-                        throw new Error(
-                            "Upload failed: " +
-                            response.status
-                        );
-                    }
-
-                    console.log(
-                        "Uploaded:",
-                        file.name
-                    );
-
-                } catch (error) {
-
-                    console.error(
-                        "Photo upload error:",
-                        error
-                    );
-
-                    alert(
-                        "Failed to upload " +
-                        file.name
-                    );
-                }
-            }
-
-            alert("Photos uploaded successfully!");
-
-        }
-    );
-}
 */
 /* =========================================
    PHOTO UPLOAD
    ========================================= */
-
+/*
 const galleryUploadBtn =
     document.getElementById("galleryUploadBtn");
 
@@ -244,7 +170,7 @@ if (galleryUploadBtn && galleryPagePhotoInput) {
 
         }
     );
-}
+}*/
 
 /* =========================================
    LOAD PHOTOS FOR SELECTED TRIP
