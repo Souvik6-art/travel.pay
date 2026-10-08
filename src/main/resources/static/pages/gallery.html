@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>TravelPay | Gallery</title>
+
+    <link
+            rel="stylesheet"
+            href="../css/style.css"
+    >
+
+    <link
+            rel="stylesheet"
+            href="../css/gallery.css"
+    >
+
+</head>
+
+<body>
+
+<header class="navbar">
+
+    <div class="logo">
+        Travel<span>Pay</span>
+    </div>
+
+    <nav>
+
+        <a href="dashboard.html">
+            Dashboard
+        </a>
+
+        <a href="dashboard.html#tripsOverviewSection">
+            Trips Overview
+        </a>
+
+        <a href="gallery.html" class="active">
+            Gallery
+        </a>
+
+    </nav>
+
+    <div class="nav-buttons">
+
+        <button
+                id="logoutBtn"
+                class="login-btn"
+        >
+            Logout
+        </button>
+
+    </div>
+
+</header>
+
+
+<main class="gallery-page-container">
+
+    <!-- PAGE HEADING -->
+
+    <section class="gallery-heading">
+
+        <p class="hero-tag">
+            YOUR MEMORIES
+        </p>
+
+        <h1>
+            Travel Gallery
+        </h1>
+
+        <p>
+            Explore your travel memories, organized trip by trip.
+        </p>
+
+    </section>
+
+
+    <!-- TRIP SELECTOR -->
+
+    <section class="gallery-trip-selector">
+
+        <label for="galleryPageTripSelect">
+            Select Trip
+        </label>
+
+        <select id="galleryPageTripSelect">
+
+            <option value="">
+                -- Select a Trip --
+            </option>
+
+        </select>
+
+    </section>
+
+
+    <!-- SELECTED TRIP INFORMATION -->
+
+    <section
+            id="selectedTripInfo"
+            class="selected-trip-info"
+            style="display: none;"
+    >
+
+        <div>
+
+            <p class="trip-info-label">
+                SELECTED TRIP
+            </p>
+
+            <h2 id="selectedTripName">
+                Trip Name
+            </h2>
+
+            <p id="selectedTripDestination">
+                Destination
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- PHOTO GRID -->
+
+    <section class="gallery-content">
+
+        <div
+                id="galleryPhotoGrid"
+                class="gallery-photo-grid"
+        >
+
+            <div class="gallery-empty-state">
+
+                <div class="gallery-empty-icon">
+                    📷
+                </div>
+
+                <h3>
+                    Select a trip
+                </h3>
+
+                <p>
+                    Choose a trip above to view its photos.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<script src="../js/auth.js"></script>
+<script src="../js/gallery.js"></script>
+
+</body>
+
+</html>

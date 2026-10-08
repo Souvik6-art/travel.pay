@@ -1,0 +1,252 @@
+/* =========================================
+   GALLERY PAGE
+   ========================================= */
+
+.gallery-page-container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 70px 0;
+}
+
+
+/* =========================================
+   GALLERY HEADING
+   ========================================= */
+
+.gallery-heading {
+    margin-bottom: 40px;
+}
+
+.gallery-heading h1 {
+    margin: 10px 0;
+    font-size: 42px;
+    color: #ffffff;
+}
+
+.gallery-heading p:last-child {
+    color: #9aa8b8;
+    font-size: 17px;
+}
+
+
+/* =========================================
+   TRIP SELECTOR
+   ========================================= */
+
+.gallery-trip-selector {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+    margin-bottom: 30px;
+    padding: 20px;
+
+    background: #0d1b2a;
+
+    border: 1px solid rgba(255, 255, 255, 0.08);
+
+    border-radius: 16px;
+}
+
+.gallery-trip-selector label {
+    color: #d7e0ea;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.gallery-trip-selector select {
+    min-width: 250px;
+
+    height: 45px;
+
+    padding: 0 14px;
+
+    border: 1px solid #26384b;
+    border-radius: 10px;
+
+    background: #07111f;
+
+    color: #ffffff;
+
+    font-family: inherit;
+    font-size: 14px;
+
+    outline: none;
+
+    cursor: pointer;
+}
+
+.gallery-trip-selector select:focus {
+    border-color: #35d0ba;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(53, 208, 186, 0.12);
+}
+
+
+/* =========================================
+   SELECTED TRIP
+   ========================================= */
+
+.selected-trip-info {
+    margin-bottom: 30px;
+
+    padding: 25px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #0d1b2a,
+            #123d3a
+        );
+
+    border: 1px solid
+        rgba(53, 208, 186, 0.20);
+
+    border-radius: 18px;
+}
+
+.trip-info-label {
+    margin-bottom: 8px;
+
+    color: #35d0ba;
+
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.selected-trip-info h2 {
+    margin: 0 0 8px;
+
+    color: #ffffff;
+
+    font-size: 26px;
+}
+
+#selectedTripDestination {
+    margin: 0;
+
+    color: #9aa8b8;
+
+    font-size: 14px;
+}
+
+
+/* =========================================
+   PHOTO GRID
+   ========================================= */
+
+.gallery-photo-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 18px;
+
+    min-height: 300px;
+}
+
+
+/* =========================================
+   EMPTY STATE
+   ========================================= */
+
+.gallery-empty-state {
+    grid-column: 1 / -1;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-height: 300px;
+
+    padding: 40px;
+
+    background: #0d1b2a;
+
+    border: 1px solid
+        rgba(255, 255, 255, 0.08);
+
+    border-radius: 18px;
+
+    text-align: center;
+}
+
+.gallery-empty-icon {
+    font-size: 45px;
+
+    margin-bottom: 15px;
+}
+
+.gallery-empty-state h3 {
+    margin-bottom: 8px;
+
+    color: #ffffff;
+
+    font-size: 20px;
+}
+
+.gallery-empty-state p {
+    margin: 0;
+
+    color: #718096;
+
+    font-size: 14px;
+}
+
+
+/* =========================================
+   RESPONSIVE
+   ========================================= */
+
+@media (max-width: 1000px) {
+
+    .gallery-photo-grid {
+        grid-template-columns:
+            repeat(3, 1fr);
+    }
+
+}
+
+@media (max-width: 700px) {
+
+    .gallery-page-container {
+        width: 92%;
+        padding: 40px 0;
+    }
+
+    .gallery-heading h1 {
+        font-size: 34px;
+    }
+
+    .gallery-trip-selector {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .gallery-trip-selector select {
+        width: 100%;
+    }
+
+    .gallery-photo-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+}
+
+@media (max-width: 450px) {
+
+    .gallery-photo-grid {
+        grid-template-columns: 1fr;
+    }
+
+}

@@ -938,3 +938,24 @@ photoUploadInput.addEventListener("change", function () {
 
 // Load trips when the dashboard opens
 loadGalleryTrips();
+
+/* =========================================
+   OPEN FULL PHOTO GALLERY
+   ========================================= */
+console.log ("the gallery page started")
+const viewGalleryBtn =
+    document.getElementById("viewGalleryBtn");
+
+if (viewGalleryBtn) {
+
+    viewGalleryBtn.addEventListener("click", function () {
+console.log ("the gallery page started")
+        window.location.href = "gallery.html";
+
+
+    });
+
+}
+}
+
+//...........................
