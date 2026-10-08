@@ -956,6 +956,6 @@ console.log ("the gallery page started")
     });
 
 }
-}
 
-//...........................
+
+
