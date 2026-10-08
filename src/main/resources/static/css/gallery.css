@@ -1,6 +1,6 @@
-/* =========================================
-   GALLERY PAGE
-   ========================================= */
+ /* =========================================
+    GALLERY PAGE
+    ========================================= */
 
 .gallery-page-container {
     width: 90%;
@@ -37,7 +37,8 @@
 .gallery-trip-selector {
     display: flex;
     align-items: center;
-    gap: 15px;
+    justify-content: space-between;
+    gap: 20px;
 
     margin-bottom: 30px;
     padding: 20px;
@@ -50,14 +51,20 @@
 }
 
 .gallery-trip-selector label {
+    display: block;
+
+    margin-bottom: 8px;
+
     color: #d7e0ea;
+
     font-size: 14px;
     font-weight: 600;
 }
 
 .gallery-trip-selector select {
-    min-width: 250px;
+    display: block;
 
+    width: 300px;
     height: 45px;
 
     padding: 0 14px;
@@ -75,6 +82,12 @@
     outline: none;
 
     cursor: pointer;
+
+    transition: 0.25s ease;
+}
+
+.gallery-trip-selector select:hover {
+    border-color: rgba(53, 208, 186, 0.6);
 }
 
 .gallery-trip-selector select:focus {
@@ -83,6 +96,55 @@
     box-shadow:
         0 0 0 3px
         rgba(53, 208, 186, 0.12);
+}
+
+.gallery-trip-selector select option {
+    background: #0d1b2a;
+    color: #ffffff;
+}
+
+
+/* =========================================
+   UPLOAD AREA
+   ========================================= */
+
+.gallery-upload-area {
+    display: flex;
+    align-items: center;
+}
+
+.gallery-upload-area .section-action-btn {
+    height: 45px;
+
+    padding: 0 20px;
+
+    border: 1px solid
+        rgba(53, 208, 186, 0.35);
+
+    border-radius: 10px;
+
+    background:
+        rgba(53, 208, 186, 0.08);
+
+    color: #ffffff;
+
+    font-family: inherit;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.25s ease;
+}
+
+.gallery-upload-area .section-action-btn:hover {
+    background:
+        rgba(53, 208, 186, 0.18);
+
+    border-color: #35d0ba;
+
+    transform: translateY(-2px);
 }
 
 
@@ -115,6 +177,7 @@
 
     font-size: 11px;
     font-weight: 700;
+
     letter-spacing: 1px;
 }
 
@@ -148,6 +211,46 @@
     gap: 18px;
 
     min-height: 300px;
+}
+
+
+/* =========================================
+   PHOTO CARD
+   ========================================= */
+
+.gallery-photo-card {
+    width: 100%;
+    height: 220px;
+
+    overflow: hidden;
+
+    border-radius: 14px;
+
+    background: #0d1b2a;
+
+    border: 1px solid #26384b;
+
+    box-shadow:
+        0 8px 25px
+        rgba(0, 0, 0, 0.18);
+}
+
+.gallery-photo-card img {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.3s ease;
+}
+
+.gallery-photo-card img:hover {
+    transform: scale(1.04);
 }
 
 
@@ -187,7 +290,7 @@
 }
 
 .gallery-empty-state h3 {
-    margin-bottom: 8px;
+    margin: 0 0 8px;
 
     color: #ffffff;
 
@@ -204,7 +307,24 @@
 
 
 /* =========================================
-   RESPONSIVE
+   LOADING STATE
+   ========================================= */
+
+.gallery-loading {
+    grid-column: 1 / -1;
+
+    padding: 40px;
+
+    color: #718096;
+
+    font-size: 14px;
+
+    text-align: center;
+}
+
+
+/* =========================================
+   TABLET
    ========================================= */
 
 @media (max-width: 1000px) {
@@ -215,6 +335,11 @@
     }
 
 }
+
+
+/* =========================================
+   MOBILE
+   ========================================= */
 
 @media (max-width: 700px) {
 
@@ -229,10 +354,18 @@
 
     .gallery-trip-selector {
         flex-direction: column;
-        align-items: flex-start;
+        align-items: stretch;
     }
 
     .gallery-trip-selector select {
+        width: 100%;
+    }
+
+    .gallery-upload-area {
+        width: 100%;
+    }
+
+    .gallery-upload-area .section-action-btn {
         width: 100%;
     }
 
@@ -243,33 +376,19 @@
 
 }
 
+
+/* =========================================
+   SMALL MOBILE
+   ========================================= */
+
 @media (max-width: 450px) {
 
     .gallery-photo-grid {
         grid-template-columns: 1fr;
     }
 
-}
-#galleryPageTripSelect {
-    display: block;
-    width: 300px;
-    height: 45px;
-    padding: 0 12px;
+    .gallery-photo-card {
+        height: 240px;
+    }
 
-    background: #0d1b2a;
-    color: #ffffff;
-
-    border: 1px solid #35d0ba;
-    border-radius: 10px;
-
-    font-size: 15px;
-    font-family: inherit;
-
-    cursor: pointer;
-    outline: none;
-}
-
-#galleryPageTripSelect option {
-    background: #0d1b2a;
-    color: #ffffff;
 }
