@@ -85,19 +85,45 @@
 
     <!-- TRIP SELECTOR -->
 
+    <!-- TRIP SELECTOR -->
+
     <section class="gallery-trip-selector">
 
-        <label for="galleryPageTripSelect">
-            Select Trip
-        </label>
+        <div>
 
-        <select id="galleryPageTripSelect">
+            <label for="galleryPageTripSelect">
+                Select Trip
+            </label>
 
-            <option value="">
-                -- Select a Trip --
-            </option>
+            <select id="galleryPageTripSelect">
 
-        </select>
+                <option value="">
+                    -- Select a Trip --
+                </option>
+
+            </select>
+
+        </div>
+
+        <div class="gallery-upload-area">
+
+            <button
+                    type="button"
+                    id="galleryUploadBtn"
+                    class="section-action-btn"
+            >
+                + Upload Photos
+            </button>
+
+            <input
+                    type="file"
+                    id="galleryPagePhotoInput"
+                    accept="image/*"
+                    multiple
+                    hidden
+            >
+
+        </div>
 
     </section>
 
