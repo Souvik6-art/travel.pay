@@ -1,12 +1,11 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>My Trips - TravelPay</title>
-
     <link rel="stylesheet" href="../css/style.css">
 </head>
 
@@ -15,41 +14,42 @@
 <h1>My Trips</h1>
 
 <button id="createTripBtn">Create New Trip</button>
+
 <div id="createTripForm" style="display: none;">
 
     <h2>Create New Trip</h2>
 
-    <input
-            type="text"
-            id="tripName"
-            placeholder="Trip name"
-    >
-
-    <input
-            type="text"
-            id="destination"
-            placeholder="Destination"
-    >
+    <input type="text" id="tripName" placeholder="Trip name">
+    <input type="text" id="destination" placeholder="Destination">
 
     <label>Start Date</label>
-    <input
-            type="date"
-            id="startDate"
-    >
+    <input type="date" id="startDate">
 
     <label>End Date</label>
-    <input
-            type="date"
-            id="endDate"
-    >
+    <input type="date" id="endDate">
 
-    <button id="saveTripBtn">
+    <hr>
+
+    <h3>Trip Companions</h3>
+    <p>Add companions and choose whether each can contribute payments.</p>
+
+    <div id="companionsContainer"></div>
+
+    <button type="button" id="addCompanionBtn">
+        + Add Companion
+    </button>
+
+    <br><br>
+
+    <button type="button" id="saveTripBtn">
         Save Trip
     </button>
 
 </div>
-<div id="tripList"></div>
-<script src="../js/trips.js"></script>
-</body>
 
+<div id="tripList"></div>
+
+<script src="../js/trips.js"></script>
+
+</body>
 </html>
