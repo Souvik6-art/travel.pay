@@ -1,6 +1,8 @@
+
 const userId = localStorage.getItem("userId");
 const tripId = localStorage.getItem("tripId");
 
+// Redirect if required information is missing
 if (!userId) {
     window.location.href = "login.html";
 }
@@ -9,37 +11,43 @@ if (!tripId) {
     window.location.href = "trips.html";
 }
 
+// Stop executing if the user or trip ID is missing
+if (!userId || !tripId) {
+    throw new Error("User ID or Trip ID is missing.");
+}
+
+
+// ==============================
+// DOM ELEMENTS
+// ==============================
 
 const tripName = document.getElementById("tripName");
 const tripInfo = document.getElementById("tripInfo");
 
 
-// Load trip information
+// ==============================
+// LOAD TRIP INFORMATION
+// ==============================
+
 async function loadTrip() {
-
     try {
-
-        const response = await fetch(
-            `/api/trips/${tripId}`
-        );
+        const response = await fetch(`/api/trips/${tripId}`);
 
         if (!response.ok) {
-            throw new Error("Failed to load trip");
+            throw new Error("Failed to load trip.");
         }
 
         const trip = await response.json();
 
         console.log("Trip:", trip);
 
-        tripName.textContent =
-            trip.tripName;
+        tripName.textContent = trip.tripName;
 
         tripInfo.innerHTML = `
             <p>
                 <strong>Destination:</strong>
                 ${trip.destination}
             </p>
-
 
             <p>
                 <strong>Start Date:</strong>
@@ -56,150 +64,241 @@ async function loadTrip() {
                 ${trip.status}
             </p>
         `;
-document.getElementById("tripStatus").value =
-    trip.status;
-    } catch (error) {
 
+        const tripStatus = document.getElementById("tripStatus");
+
+        if (tripStatus) {
+            tripStatus.value = trip.status;
+        }
+
+    } catch (error) {
         console.error("Trip error:", error);
 
-        tripName.textContent =
-            "Unable to load trip";
-
+        tripName.textContent = "Unable to load trip";
     }
 }
 
 
-// Load trip financial summary
+// ==============================
+// LOAD TRIP FINANCIAL SUMMARY
+// ==============================
+
 async function loadTripSummary() {
-
     try {
-
         const response = await fetch(
             `/api/reports/user/${userId}/trip/${tripId}/summary`
         );
 
         if (!response.ok) {
-            throw new Error(
-                "Unable to load trip summary"
-            );
+            throw new Error("Unable to load trip summary.");
         }
 
         const summary = await response.json();
 
-        console.log(
-            "Trip Summary:",
-            summary
-        );
-
+        console.log("Trip Summary:", summary);
 
         document.getElementById("tripBudget").textContent =
             `₹${Number(summary.totalBudget).toFixed(2)}`;
 
-
         document.getElementById("tripSpent").textContent =
             `₹${Number(summary.totalSpent).toFixed(2)}`;
-
 
         document.getElementById("tripRemaining").textContent =
             `₹${Number(summary.remainingBudget).toFixed(2)}`;
 
     } catch (error) {
-
-        console.error(
-            "Trip summary error:",
-            error
-        );
-
+        console.error("Trip summary error:", error);
     }
 }
 
 
-// Navigation
+// ==============================
+// NAVIGATION
+// ==============================
 
 function openBudget() {
-
-    window.location.href =
-        "budget.html";
+    window.location.href = "budget.html";
 }
-
 
 function openExpenses() {
-
-    window.location.href =
-        "expenses.html";
+    window.location.href = "expenses.html";
 }
-
 
 function openTransactions() {
-
-    window.location.href =
-        "transactions.html";
+    window.location.href = "transactions.html";
 }
-
 
 function openReports() {
-
-    window.location.href =
-        "reports.html";
+    window.location.href = "reports.html";
 }
-
 
 function backToTrips() {
-
-    window.location.href =
-        "trips.html";
+    window.location.href = "trips.html";
 }
 
 
-// Start
+// ==============================
+// UPDATE TRIP STATUS
+// ==============================
 
 async function updateTripStatus() {
+    const tripStatus = document.getElementById("tripStatus");
+    const statusMessage = document.getElementById("statusMessage");
 
-    const status =
-        document.getElementById("tripStatus").value;
+    if (!tripStatus || !statusMessage) {
+        console.error("Trip status elements are missing.");
+        return;
+    }
 
-    const statusMessage =
-        document.getElementById("statusMessage");
+    const status = tripStatus.value;
 
     try {
-
-        statusMessage.textContent =
-            "Updating status...";
+        statusMessage.textContent = "Updating status...";
 
         const response = await fetch(
-            `/api/trips/${userId}/${tripId}/status?status=${status}`,
+            `/api/trips/${userId}/${tripId}/status?status=${encodeURIComponent(status)}`,
             {
                 method: "PUT"
             }
         );
 
-        const data = await response.json();
-
         if (!response.ok) {
+            const errorText = await response.text();
 
             throw new Error(
-                data.message || "Unable to update trip status"
+                errorText || "Unable to update trip status."
             );
         }
 
         statusMessage.textContent =
             `Trip status updated to ${status}.`;
 
-        // Refresh trip information
-        loadTrip();
+        await loadTrip();
 
     } catch (error) {
-
-        console.error(
-            "Trip status error:",
-            error
-        );
-
-        statusMessage.textContent =
-            error.message;
+        console.error("Trip status error:", error);
+        statusMessage.textContent = error.message;
     }
 }
 
+
+// ==============================
+// VIEW TRIP COMPANIONS
+// ==============================
+
+const viewCompanionsBtn =
+    document.getElementById("viewCompanionsBtn");
+
+const companionsSection =
+    document.getElementById("companionsSection");
+
+const tripCompanionsList =
+    document.getElementById("tripCompanionsList");
+
+
+if (viewCompanionsBtn && companionsSection && tripCompanionsList) {
+
+    viewCompanionsBtn.addEventListener("click", async () => {
+
+        const currentTripId = localStorage.getItem("tripId");
+
+        if (!currentTripId) {
+            alert("Trip ID is missing. Please reopen your trip.");
+            return;
+        }
+
+        // Determine visibility reliably, including CSS-defined display.
+        const isHidden =
+            getComputedStyle(companionsSection).display === "none";
+
+        // Hide the list if it is already visible.
+        if (!isHidden) {
+            companionsSection.style.display = "none";
+            viewCompanionsBtn.textContent = "👥 View Companions";
+            return;
+        }
+
+        // Show the section and load companions.
+        companionsSection.style.display = "block";
+        viewCompanionsBtn.textContent = "👥 Hide Companions";
+
+        tripCompanionsList.textContent = "Loading companions...";
+
+        try {
+            const response = await fetch(
+                `/api/trip-companions/trip/${currentTripId}`
+            );
+
+            if (!response.ok) {
+                const errorText = await response.text();
+
+                throw new Error(
+                    `Unable to load companions (${response.status}). ${errorText}`
+                );
+            }
+
+            const companions = await response.json();
+
+            tripCompanionsList.replaceChildren();
+
+            if (!Array.isArray(companions) || companions.length === 0) {
+                tripCompanionsList.textContent =
+                    "No companions have been added to this trip.";
+                return;
+            }
+
+            const list = document.createElement("ul");
+            list.className = "companions-list";
+
+            companions.forEach(companion => {
+                const item = document.createElement("li");
+                item.className = "companion-item";
+
+                const name = document.createElement("strong");
+                name.textContent = companion.name || "Unnamed companion";
+
+                const status = document.createElement("span");
+
+                if (companion.contributor === true) {
+                    status.textContent = "Contributor";
+                    status.className = "companion-status contributor";
+                } else {
+                    status.textContent = "Non-contributor";
+                    status.className = "companion-status non-contributor";
+                }
+
+                item.appendChild(name);
+                item.appendChild(status);
+                list.appendChild(item);
+            });
+
+            tripCompanionsList.appendChild(list);
+
+            console.log("Trip companions:", companions);
+
+        } catch (error) {
+            console.error("Companions loading error:", error);
+
+            tripCompanionsList.textContent =
+                error.message || "Unable to load companions. Please try again.";
+        }
+    });
+
+} else {
+    console.error(
+        "Companions UI elements are missing. Check the IDs in trip-dashboard.html:",
+        {
+            viewCompanionsBtn,
+            companionsSection,
+            tripCompanionsList
+        }
+    );
+}
+
+
+// ==============================
+// START
+// ==============================
+
 loadTrip();
 loadTripSummary();
-
