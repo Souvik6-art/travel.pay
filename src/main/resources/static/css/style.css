@@ -690,6 +690,30 @@ footer p {
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
 }
 
+/* Keep the companions option on its own line */
+#viewCompanionsBtn {
+    flex-basis: 100%;
+    width: 100%;
+    max-width: 220px;
+}
+
+/* Show the companion list below the button */
+#companionsSection {
+    flex: 0 0 100%;
+    width: 100%;
+    text-align: center;
+}
+
+#tripCompanionsList ul {
+    list-style: none;
+    padding: 0;
+    margin: 12px 0 0;
+}
+
+#tripCompanionsList li {
+    margin: 8px 0;
+}
+
 .trip-status-control label {
     font-weight: 600;
     font-size: 15px;
@@ -752,6 +776,7 @@ footer p {
 }
 
 #statusMessage {
+
     width: 100%;
 
     margin: 4px 0 0;
