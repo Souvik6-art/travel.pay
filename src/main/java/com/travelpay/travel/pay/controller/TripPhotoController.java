@@ -1,5 +1,6 @@
 package com.travelpay.travel.pay.controller;
 
+import org.springframework.http.HttpStatus;
 import com.travelpay.travel.pay.entity.Trip;
 import com.travelpay.travel.pay.entity.TripPhoto;
 import com.travelpay.travel.pay.repository.TripPhotoRepository;
@@ -123,4 +124,80 @@ public class TripPhotoController {
 
         }
     }
+
+
+    // RENAME PHOTO
+    @PutMapping("/{photoId}/rename")
+    public ResponseEntity<?> renamePhoto(
+            @PathVariable Long photoId,
+            @RequestParam("fileName") String fileName) {
+
+        TripPhoto photo = tripPhotoRepository.findById(photoId)
+                .orElseThrow(() ->
+                        new RuntimeException("Photo not found"));
+
+        if (fileName == null || fileName.isBlank()) {
+            return ResponseEntity.badRequest()
+                    .body("Photo name cannot be empty.");
+        }
+
+        String newName = fileName.trim();
+
+        if (newName.length() > 255) {
+            return ResponseEntity.badRequest()
+                    .body("Photo name must be 255 characters or fewer.");
+        }
+
+        photo.setFileName(newName);
+
+        TripPhoto updatedPhoto =
+                tripPhotoRepository.save(photo);
+
+        return ResponseEntity.ok(updatedPhoto);
+    }
+
+
+    // DELETE PHOTO
+    @DeleteMapping("/{photoId}")
+    public ResponseEntity<?> deletePhoto(
+            @PathVariable Long photoId) {
+
+        TripPhoto photo = tripPhotoRepository.findById(photoId)
+                .orElseThrow(() ->
+                        new RuntimeException("Photo not found"));
+
+        try {
+            // Resolve only the stored filename, not an arbitrary path.
+            Path uploadRoot = uploadDirectory
+                    .toAbsolutePath()
+                    .normalize();
+
+            String storedFileName =
+                    Paths.get(photo.getFilePath())
+                            .getFileName()
+                            .toString();
+
+            Path imagePath = uploadRoot
+                    .resolve(storedFileName)
+                    .normalize();
+
+            // Prevent deletion outside the upload directory.
+            if (!imagePath.startsWith(uploadRoot)) {
+                return ResponseEntity.badRequest()
+                        .body("Invalid photo path.");
+            }
+
+            // Delete the physical image, then its database record.
+            Files.deleteIfExists(imagePath);
+            tripPhotoRepository.delete(photo);
+
+            return ResponseEntity.noContent().build();
+
+        } catch (IOException e) {
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Could not delete the photo file.");
+        }
+    }
+
 }

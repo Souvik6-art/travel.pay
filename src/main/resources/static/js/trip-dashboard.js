@@ -250,27 +250,26 @@ if (viewCompanionsBtn && companionsSection && tripCompanionsList) {
             const list = document.createElement("ul");
             list.className = "companions-list";
 
-            companions.forEach(companion => {
-                const item = document.createElement("li");
-                item.className = "companion-item";
 
-                const name = document.createElement("strong");
-                name.textContent = companion.name || "Unnamed companion";
+companions.forEach(companion => {
+    const item = document.createElement("li");
 
-                const status = document.createElement("span");
+    item.className = companion.contributor
+        ? "contributor"
+        : "non-contributor";
 
-                if (companion.contributor === true) {
-                    status.textContent = "Contributor";
-                    status.className = "companion-status contributor";
-                } else {
-                    status.textContent = "Non-contributor";
-                    status.className = "companion-status non-contributor";
-                }
+    const name = document.createElement("strong");
+    name.textContent = companion.name;
 
-                item.appendChild(name);
-                item.appendChild(status);
-                list.appendChild(item);
-            });
+    const role = document.createElement("span");
+    role.className = "companion-role";
+    role.textContent = companion.contributor
+        ? "Contributor"
+        : "Non-contributor";
+
+    item.append(name, role);
+    list.appendChild(item);
+});
 
             tripCompanionsList.appendChild(list);
 
