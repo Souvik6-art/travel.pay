@@ -166,6 +166,56 @@
 
 </main>
 
+<!-- PHOTO ACTION MODAL -->
+<div id="photoActionModal" class="photo-modal" style="display: none;">
+    <div class="photo-modal-content">
+
+        <button id="closePhotoModal" class="photo-modal-close"
+                type="button" aria-label="Close">&times;</button>
+
+        <img id="modalPhotoPreview" src="" alt="Selected travel photo">
+
+        <h3 id="modalPhotoName">Photo name</h3>
+
+        <div class="photo-modal-actions">
+            <button id="renamePhotoBtn" type="button">
+                Rename Photo
+            </button>
+
+            <button id="deletePhotoBtn" type="button">
+                Delete Photo
+            </button>
+        </div>
+
+    </div>
+</div>
+
+<!-- RENAME PHOTO MODAL -->
+<div id="renamePhotoModal" class="photo-modal" style="display: none;">
+    <div class="photo-modal-content rename-modal-content">
+
+        <button id="closeRenameModal" class="photo-modal-close"
+                type="button" aria-label="Close">&times;</button>
+
+        <h3>Rename Photo</h3>
+
+        <label for="newPhotoName">Photo name</label>
+        <input id="newPhotoName" type="text" maxlength="255"
+               placeholder="Enter a new photo name">
+
+        <div class="photo-modal-actions">
+            <button id="savePhotoNameBtn" type="button">
+                Save Name
+            </button>
+
+            <button id="cancelRenameBtn" type="button">
+                Cancel
+            </button>
+        </div>
+
+    </div>
+</div>
+
 
 <script src="../js/auth.js"></script>
 <script src="../js/gallery.js"></script>

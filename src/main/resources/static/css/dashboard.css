@@ -1078,3 +1078,88 @@
     }
 
 }
+
+/* Trip Companions Section */
+#companionsSection {
+    width: 100%;
+    flex: 0 0 100%;
+    margin-top: 18px;
+    text-align: left;
+}
+
+#companionsSection h3 {
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+/* Remove default list styling */
+#tripCompanionsList ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* Each companion card */
+#tripCompanionsList li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 18px;
+    border-radius: 12px;
+    font-weight: 600;
+    border: 1px solid transparent;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Contributor — green highlight */
+#tripCompanionsList li.contributor {
+    background: #dcfce7;
+    color: #166534;
+    border-color: #86efac;
+    box-shadow: 0 3px 10px rgba(22, 163, 74, 0.12);
+}
+
+/* Non-contributor — white highlight */
+#tripCompanionsList li.non-contributor {
+    background: #ffffff;
+    color: #1f2937;
+    border-color: #e5e7eb;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
+}
+
+/* Hover effect */
+#tripCompanionsList li:hover {
+    transform: translateY(-2px);
+}
+
+/* Role label */
+.companion-role {
+    font-size: 12px;
+    font-weight: 700;
+    padding: 5px 10px;
+    border-radius: 20px;
+    white-space: nowrap;
+}
+
+.contributor .companion-role {
+    background: #bbf7d0;
+    color: #166534;
+}
+
+.non-contributor .companion-role {
+    background: #f3f4f6;
+    color: #374151;
+}
+
+/* Mobile responsive */
+@media (max-width: 480px) {
+    #tripCompanionsList li {
+        padding: 12px;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+}
