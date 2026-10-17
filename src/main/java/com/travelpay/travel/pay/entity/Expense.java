@@ -80,5 +80,14 @@ public class Expense {
         this.trip = trip;
     }
 
+    // The companion who paid; null means the trip owner paid.
+    private Long contributorCompanionId;
 
+    public Long getContributorCompanionId() {
+        return contributorCompanionId;
+    }
+
+    public void setContributorCompanionId(Long contributorCompanionId) {
+        this.contributorCompanionId = contributorCompanionId;
+    }
 }

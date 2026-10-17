@@ -16,6 +16,9 @@ import com.travelpay.travel.pay.repository.TripRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import com.travelpay.travel.pay.entity.TripCompanion;
+import com.travelpay.travel.pay.repository.TripCompanionRepository;
+
 @RestController
 @RequestMapping("/api/expenses")
 public class ExpenseController {
@@ -24,7 +27,7 @@ public class ExpenseController {
     private final UserRepository userRepository;
     private final TransactionRepository transactionRepository;
     private final TripRepository tripRepository;
-
+    private final TripCompanionRepository companionRepository;
     public ExpenseController(
             ExpenseRepository expenseRepository,
             UserRepository userRepository,
@@ -35,6 +38,7 @@ public class ExpenseController {
         this.userRepository = userRepository;
         this.transactionRepository = transactionRepository;
         this.tripRepository = tripRepository;
+        this.companionRepository = companionRepository;
     }
 
     // Add expense to a specific trip
@@ -84,7 +88,13 @@ public class ExpenseController {
         transaction.setTransactionDate(savedExpense.getExpenseDate());
         transaction.setUser(user);
         transaction.setTrip(trip);
-
+// adding newly 17.10.26
+        expense.setContributorCompanionId(
+                validateContributorCompanion(
+                        expense.getContributorCompanionId(),
+                        tripId
+                )
+        );
 // Connect transaction to this expense
         transaction.setExpense(savedExpense);
 
@@ -259,5 +269,31 @@ public class ExpenseController {
         );
     }
 
+//       ekhon Add holo..
+private Long validateContributorCompanion(
+        Long companionId,
+        Long tripId) {
 
+    // Null means the trip owner paid.
+    if (companionId == null) {
+        return null;
+    }
+
+    TripCompanion companion = companionRepository.findById(companionId)
+            .orElseThrow(() ->
+                    new RuntimeException("Contributor not found"));
+
+    if (companion.getTrip() == null
+            || !companion.getTrip().getId().equals(tripId)) {
+        throw new RuntimeException(
+                "Contributor does not belong to this trip");
+    }
+
+    if (!companion.isContributor()) {
+        throw new RuntimeException(
+                "This companion is not marked as a contributor");
+    }
+
+    return companion.getId();
+}
 }
