@@ -1,6 +1,14 @@
-package com.travelpay.travel.pay.entity;
+
+        package com.travelpay.travel.pay.entity;
+
 import java.time.LocalDateTime;
-import jakarta.persistence.*;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Expense {
@@ -24,6 +32,10 @@ public class Expense {
     @ManyToOne
     @JoinColumn(name = "trip_id")
     private Trip trip;
+
+    // ID of the companion who paid.
+    // null means the trip owner paid.
+    private Long contributorCompanionId;
 
     public Expense() {
     }
@@ -56,20 +68,20 @@ public class Expense {
         this.amount = amount;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-// local date pawar jonne add kora holo ..
     public LocalDateTime getExpenseDate() {
         return expenseDate;
     }
 
     public void setExpenseDate(LocalDateTime expenseDate) {
         this.expenseDate = expenseDate;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Trip getTrip() {
@@ -79,9 +91,6 @@ public class Expense {
     public void setTrip(Trip trip) {
         this.trip = trip;
     }
-
-    // The companion who paid; null means the trip owner paid.
-    private Long contributorCompanionId;
 
     public Long getContributorCompanionId() {
         return contributorCompanionId;

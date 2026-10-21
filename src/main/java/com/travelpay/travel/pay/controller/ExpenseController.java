@@ -32,7 +32,7 @@ public class ExpenseController {
             ExpenseRepository expenseRepository,
             UserRepository userRepository,
             TransactionRepository transactionRepository,
-            TripRepository tripRepository) {
+            TripRepository tripRepository ,  TripCompanionRepository companionRepository) {
 
         this.expenseRepository = expenseRepository;
         this.userRepository = userRepository;
