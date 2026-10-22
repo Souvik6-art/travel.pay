@@ -1,8 +1,9 @@
 
-        package com.travelpay.travel.pay.entity;
+package com.travelpay.travel.pay.entity;
 
 import java.time.LocalDateTime;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -34,8 +35,12 @@ public class Expense {
     private Trip trip;
 
     // ID of the companion who paid.
-    // null means the trip owner paid.
+    // Null means the trip owner paid.
     private Long contributorCompanionId;
+
+    // OWNER, COMPANION, or ALL_EQUAL
+    @Column(name = "payment_mode", nullable = false)
+    private String paymentMode = "OWNER";
 
     public Expense() {
     }
@@ -98,5 +103,13 @@ public class Expense {
 
     public void setContributorCompanionId(Long contributorCompanionId) {
         this.contributorCompanionId = contributorCompanionId;
+    }
+
+    public String getPaymentMode() {
+        return paymentMode;
+    }
+
+    public void setPaymentMode(String paymentMode) {
+        this.paymentMode = paymentMode;
     }
 }
