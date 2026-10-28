@@ -301,3 +301,101 @@ companions.forEach(companion => {
 
 loadTrip();
 loadTripSummary();
+
+async function viewTripSettlement() {
+    const tripId = localStorage.getItem("tripId");
+
+    if (!tripId) {
+        alert("Trip ID not found. Please open a trip first.");
+        return;
+    }
+
+    const section = document.getElementById("settlementSection");
+    const totalElement = document.getElementById("settlementTotal");
+    const participantsElement = document.getElementById("settlementParticipants");
+    const transfersElement = document.getElementById("settlementTransfers");
+    const hideButton = document.getElementById("hideSettlementBtn");
+
+    // Show loading state
+    section.style.display = "block";
+    totalElement.textContent = "Loading...";
+    participantsElement.replaceChildren();
+    transfersElement.replaceChildren();
+
+    // Hide the Hide Settlement button until loading succeeds
+    if (hideButton) {
+        hideButton.style.display = "none";
+    }
+
+    try {
+        const response = await fetch(`/api/trips/${tripId}/settlement`);
+
+        if (!response.ok) {
+            throw new Error("Failed to load settlement.");
+        }
+
+        const data = await response.json();
+
+        totalElement.textContent = Number(data.totalExpense).toFixed(2);
+
+        // Display participant balances
+        data.participants.forEach(person => {
+            const row = document.createElement("p");
+
+            row.textContent =
+                `${person.name} — Paid ₹${Number(person.totalPaid).toFixed(2)}, ` +
+                `Share ₹${Number(person.equalShare).toFixed(2)}, ` +
+                `${person.status}: ₹${Math.abs(Number(person.netBalance)).toFixed(2)}`;
+
+            participantsElement.appendChild(row);
+        });
+
+        // Display settlement transfers
+        if (data.settlements.length === 0) {
+            transfersElement.textContent =
+                "Everyone is settled. No payments required.";
+        } else {
+            data.settlements.forEach(transfer => {
+                const row = document.createElement("p");
+
+                row.textContent =
+                    `${transfer.from} pays ${transfer.to} ₹` +
+                    `${Number(transfer.amount).toFixed(2)}`;
+
+                transfersElement.appendChild(row);
+            });
+        }
+
+        // Show Hide Settlement only after successful loading
+        if (hideButton) {
+            hideButton.style.display = "inline-block";
+        }
+
+    } catch (error) {
+        console.error("Error loading settlement:", error);
+
+        totalElement.textContent = "Unable to load settlement.";
+        participantsElement.replaceChildren();
+        transfersElement.replaceChildren();
+
+        // Hide the section if loading fails
+        section.style.display = "none";
+
+        if (hideButton) {
+            hideButton.style.display = "none";
+        }
+
+        alert("Unable to load trip settlement. Please try again.");
+    }
+}
+
+// Hide the settlement section and its button
+function hideTripSettlement() {
+    document.getElementById("settlementSection").style.display = "none";
+
+    const hideButton = document.getElementById("hideSettlementBtn");
+
+    if (hideButton) {
+        hideButton.style.display = "none";
+    }
+}
