@@ -672,6 +672,7 @@ footer p {
 /* TRIP STATUS CONTROL */
 /* ============================= */
 
+
 .trip-status-control {
     margin-top: 25px;
     padding: 22px 25px;
@@ -687,6 +688,10 @@ footer p {
     background: rgba(255, 255, 255, 0.08);
     border: 1px solid rgba(255, 255, 255, 0.15);
 
+/*
+background-color: #1e1e24;
+border: 1px solid #9e3f3f;
+*/
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
 }
 
@@ -727,8 +732,8 @@ footer p {
     border: 1px solid #d1d5db;
     border-radius: 10px;
 
-    background: white;
-
+    background: #1e293b;
+color: white;
     font-size: 14px;
     font-weight: 600;
 
@@ -752,11 +757,12 @@ footer p {
     border: none;
     border-radius: 10px;
 
-    background: linear-gradient(
-        135deg,
-        #6366f1,
-        #8b5cf6
-    );
+  background: linear-gradient(
+      135deg,
+      #334155, /* Lighter Steel Slate */
+      #1e293b  /* Transitions down into your main background's top color */
+  );
+
 
     color: white;
 

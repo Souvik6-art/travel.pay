@@ -71,7 +71,7 @@
 
             </select>
 
-            <button onclick="updateTripStatus()">
+            <button id="updatestatus" onclick="updateTripStatus()">
                 ✓ Update Status
             </button>
 
@@ -92,7 +92,22 @@
             </div>
 
         </div>
+        <div id="settlementSection" style="display: none;">
+            <h3>Trip Contribution Settlement</h3>
 
+            <p>Total Expenses: ₹<span id="settlementTotal">0.00</span></p>
+
+            <h4>Participant Balances</h4>
+            <div id="settlementParticipants"></div>
+
+            <h4>Who Pays Whom?</h4>
+            <div id="settlementTransfers"></div>
+            <br>
+            <br>
+            <button id="hideSettlementBtn" onclick="hideTripSettlement()">
+                Hide Settlement
+            </button>
+        </div>
     </section>
 
 
