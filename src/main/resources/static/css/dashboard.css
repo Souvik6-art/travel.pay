@@ -22,8 +22,10 @@
     color: #9aa8b8;
     font-size: 17px;
 }
-
-
+  #logoutBtn {
+  background: linear-gradient(135deg, #475569, #27374d);
+  border-color: #c95252;
+}
 /* Main Dashboard Cards */
 
 .dashboard-grid {

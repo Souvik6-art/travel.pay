@@ -99,3 +99,31 @@
     text-decoration: none;
     font-weight: 600;
 }
+
+.password-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.password-wrapper input {
+    width: 100%;
+    box-sizing: border-box;
+    padding-right: 45px;
+}
+
+.password-toggle {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    color: #07111f;
+}
+
+.password-toggle:hover {
+    opacity: 0.7;
+}

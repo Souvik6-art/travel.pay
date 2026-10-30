@@ -81,3 +81,47 @@ if (loginForm) {
     });
 
 }
+
+
+/*logout*/
+document.addEventListener("DOMContentLoaded", function () {
+    const logoutBtn = document.getElementById("logoutBtn");
+
+    if (logoutBtn) {
+        logoutBtn.addEventListener("click", function () {
+            const confirmLogout = confirm("Are you sure you want to logout?");
+
+            if (!confirmLogout) {
+                return;
+            }
+
+            // Clear the current login and trip information
+            localStorage.removeItem("userId");
+            localStorage.removeItem("tripId");
+
+            // Redirect to the login page
+            window.location.href = "login.html";
+        });
+    }
+});
+
+/*eye button*/
+
+document.addEventListener("DOMContentLoaded", function () {
+    const passwordInput = document.getElementById("password");
+    const toggleButton = document.getElementById("togglePassword");
+
+    if (!passwordInput || !toggleButton) return;
+
+    toggleButton.addEventListener("click", function () {
+        const isHidden = passwordInput.type === "password";
+
+        passwordInput.type = isHidden ? "text" : "password";
+        toggleButton.textContent = isHidden ? "🙈" : "👁";
+        toggleButton.setAttribute(
+            "aria-label",
+            isHidden ? "Hide password" : "Show password"
+        );
+        toggleButton.setAttribute("aria-pressed", String(isHidden));
+    });
+});
