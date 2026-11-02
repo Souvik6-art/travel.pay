@@ -174,12 +174,17 @@ expenseForm.addEventListener("submit", async function (event) {
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({
-                    title: title,
-                    category: category,
-                    amount: amount,
-                    contributorCompanionId: contributorCompanionId
-                })
+               body: JSON.stringify({
+                   title: title,
+                   category: category,
+                   amount: amount,
+
+                   paymentMode: contributorCompanionId === null
+                       ? "OWNER"
+                       : "COMPANION",
+
+                   contributorCompanionId: contributorCompanionId
+               })
             }
         );
 
@@ -546,12 +551,17 @@ editExpenseForm.addEventListener("submit", async function (event) {
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({
-                    title: title,
-                    category: category,
-                    amount: amount,
-                    contributorCompanionId: contributorCompanionId
-                })
+              body: JSON.stringify({
+                  title: title,
+                  category: category,
+                  amount: amount,
+
+                  paymentMode: contributorCompanionId === null
+                      ? "OWNER"
+                      : "COMPANION",
+
+                  contributorCompanionId: contributorCompanionId
+              })
             }
         );
 
