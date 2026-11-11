@@ -4,8 +4,8 @@ import com.travelpay.travel.pay.dto.UserResponse;
 import com.travelpay.travel.pay.entity.User;
 import com.travelpay.travel.pay.exception.EmailAlreadyExistsException;
 import com.travelpay.travel.pay.repository.UserRepository;
-
 import jakarta.validation.Valid;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,9 +15,13 @@ import java.util.List;
 public class UserController {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserController(UserRepository userRepository) {
+    public UserController(
+            UserRepository userRepository,
+            PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @PostMapping
@@ -26,6 +30,8 @@ public class UserController {
         if (userRepository.findByEmail(user.getEmail()).isPresent()) {
             throw new EmailAlreadyExistsException("Email already registered");
         }
+
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         User savedUser = userRepository.save(user);
 

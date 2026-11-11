@@ -6,7 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-
+import com.fasterxml.jackson.annotation.JsonProperty;
 @Entity
 public class User {
 
@@ -23,7 +23,10 @@ public class User {
 
     private String phoneNumber;
 
+    /*@NotBlank(message = "Password cannot be blank")
+    private String password;*/
     @NotBlank(message = "Password cannot be blank")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     public User() {
